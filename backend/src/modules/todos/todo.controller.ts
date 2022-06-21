@@ -13,14 +13,14 @@ export class TodoController {
 	) { }
 
 	@Get()
-	getAllEntries(): Promise<Todo[]> {
+	getAllTodos(): Promise<Todo[]> {
 		return this.service.getAll();
 	}
 
-	@Get(':entryId')
-	getEntryById(
-		@Param("entryId") entryId: number
+	@Get(':todoId')
+	getTodoById(
+		@Param("todoId") todoId: number
 	): Promise<Todo> {
-		return this.service.getById(entryId);
+		return this.service.getById(todoId);
 	}
 }
