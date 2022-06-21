@@ -1,7 +1,7 @@
 
-import { Injectable, NotImplementedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { BaseRepository } from "../base/base-repository";
 import { AddTodoDTO } from "./dto/add-todo.dto";
 import { UpdateTodoDTO } from "./dto/update-todo.dto";
 import { Todo } from "./todo.entity";
@@ -10,29 +10,26 @@ import { Todo } from "./todo.entity";
 export class TodoService {
 	constructor(
 		@InjectRepository(Todo)
-		private repository: Repository<Todo>
+		private repository: BaseRepository<Todo>
 	) { }
 
 	getAll(): Promise<Todo[]> {
-		return this.repository.find();
+		return this.repository.getAll();
 	}
 
 	getById(id: number): Promise<Todo> {
-		return this.repository.findOne({ where: { id } });
+		return this.repository.getById(id);
 	}
 
 	addOne(addTodoDTO: AddTodoDTO): Promise<Todo> {
-		throw new NotImplementedException();
-		// return this.repository.create(addTodoDTO)
+		return this.repository.addOne(addTodoDTO);
 	}
 
-	updateOne(updateTodoDTO: UpdateTodoDTO): Promise<Todo> {
-		throw new NotImplementedException();
-		// return this.repository.update(updateTodoDTO)
+	updateOne(id: number, updateTodoDTO: UpdateTodoDTO): Promise<Todo> {
+		return this.repository.updateOne(id, updateTodoDTO);
 	}
 
 	deleteOne(id: number): Promise<{ id: number }> {
-		throw new NotImplementedException();
-		// return this.repository.delete(id)
+		return this.repository.deleteOne(id);
 	}
 }

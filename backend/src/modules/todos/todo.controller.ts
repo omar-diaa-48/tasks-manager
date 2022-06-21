@@ -34,12 +34,13 @@ export class TodoController {
 		return this.service.addOne(addTodoDTO);
 	}
 
-	@Put()
+	@Put(":todoId")
 	@UsePipes(ValidationPipe)
 	updateTodo(
+		@Param("todoId") todoId: number,
 		@Body() updateTodoDTO: UpdateTodoDTO
 	): Promise<Todo> {
-		return this.service.updateOne(updateTodoDTO);
+		return this.service.updateOne(todoId, updateTodoDTO);
 	}
 
 	@Delete(":todoId")
