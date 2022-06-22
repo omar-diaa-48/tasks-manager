@@ -12,6 +12,7 @@ export class StatusService {
 	) { }
 
 	getAll(): Promise<Status[]> {
-		return this.repository.getAll();
+		const relations = ["fromTransitions", "toTransitions"];
+		return this.repository.getAll(relations);
 	}
 }

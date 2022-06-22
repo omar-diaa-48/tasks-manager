@@ -11,9 +11,6 @@ import { TransitionService } from "./transition.service";
 	controllers: [TransitionController],
 	providers: [
 		TransitionService
-	],
-	exports: [
-		TransitionService
 	]
 })
 export class TransitionModule { };

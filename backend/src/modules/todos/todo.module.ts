@@ -11,9 +11,6 @@ import { TodoService } from "./todo.service";
 	controllers: [TodoController],
 	providers: [
 		TodoService
-	],
-	exports: [
-		TodoService
 	]
 })
 export class TodoModule { };

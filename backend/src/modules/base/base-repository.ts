@@ -1,7 +1,7 @@
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 import { BaseEntity, Repository } from "typeorm";
 
-export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity>{
+export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity> implements IBaseRepository<Entity> {
 	async getAll(relationsToLoad: string[] = []): Promise<Entity[]> {
 		return this.find({ relations: relationsToLoad });
 	}
@@ -97,9 +97,21 @@ export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity
 		};
 	}
 
-	private checkRecordIdOrFail(recordId: number): void {
+	checkRecordIdOrFail(recordId: number): void {
 		if (!recordId || typeof recordId === "undefined" || recordId === null) {
 			throw new BadRequestException('Record id sent is not valid')
 		}
 	}
+}
+
+export interface IBaseRepository<T> {
+	getAll(relationsToLoad: string[]): Promise<T[]>
+
+	getById(recordId: number, relationsToLoad: string[]): Promise<T>
+
+	updateOne(recordId: number, updateDto: object): Promise<T>
+
+	deleteOne(recordId: number): Promise<{ id: number }>
+
+	checkRecordIdOrFail(recordId: number): void
 }
