@@ -5,8 +5,8 @@ import { Status } from "./status.entity";
 import { StatusService } from "./status.service";
 
 
-@ApiTags('todos')
-@Controller('todos')
+@ApiTags('statuses')
+@Controller('statuses')
 export class StatusController {
 	constructor(
 		private service: StatusService
