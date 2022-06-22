@@ -12,9 +12,15 @@ export class Transition extends BaseEntity {
 	})
 	name: string;
 
-	@ManyToOne(() => Status, (status) => status.transitions)
+	@ManyToOne(() => Status, (status) => status.fromTransitions)
 	@JoinColumn({
 		name: 'from'
 	})
 	from: Transition;
+
+	@ManyToOne(() => Status, (status) => status.toTransitions)
+	@JoinColumn({
+		name: 'to'
+	})
+	to: Transition;
 }

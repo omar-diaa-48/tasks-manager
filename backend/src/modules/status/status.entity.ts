@@ -13,5 +13,8 @@ export class Status extends BaseEntity {
 	name: string;
 
 	@OneToMany(() => Transition, transition => transition.from)
-	transitions: Transition[];
+	fromTransitions: Transition[];
+
+	@OneToMany(() => Transition, transition => transition.to)
+	toTransitions: Transition[];
 }
