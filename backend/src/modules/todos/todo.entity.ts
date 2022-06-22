@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "../users/user.entity";
 
 @Entity({ name: 'todo', orderBy: { date: 'DESC' } })
 export class Todo extends BaseEntity {
@@ -17,9 +18,14 @@ export class Todo extends BaseEntity {
 	})
 	description: string;
 
-	// @ManyToOne(type => User)
-	// @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
-	// user: User;
+	@ManyToOne(type => User)
+	@JoinColumn({ name: 'user', referencedColumnName: 'id' })
+	user: User;
+
+	@Column({
+		name: "user"
+	})
+	userId: number;
 
 	// @ManyToOne(type => Status)
 	// @JoinColumn({ name: 'statusId', referencedColumnName: 'id' })
