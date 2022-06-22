@@ -2,17 +2,18 @@ import { BadRequestException, NotFoundException } from "@nestjs/common";
 import { BaseEntity, Repository } from "typeorm";
 
 export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity>{
-	async getAll(): Promise<Entity[]> {
-		return this.find();
+	async getAll(relationsToLoad: string[] = []): Promise<Entity[]> {
+		return this.find({ relations: relationsToLoad });
 	}
 
-	async getById(recordId: number): Promise<Entity> {
+	async getById(recordId: number, relationsToLoad: string[] = []): Promise<Entity> {
 		this.checkRecordIdOrFail(recordId);
 
 		const findConditions: any = {
 			where: {
 				id: recordId
-			}
+			},
+			relations: relationsToLoad
 		}
 
 		const record = await this.findOne(findConditions);
