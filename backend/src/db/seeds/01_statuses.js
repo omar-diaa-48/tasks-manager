@@ -4,10 +4,10 @@
  */
 exports.seed = async function (knex) {
 	// Deletes ALL existing entries
-	return knex('statuses').del()
+	return knex('status').del()
 		.then(function () {
 			// Inserts seed entries
-			return knex('statuses').insert([
+			return knex('status').insert([
 				{ id: 1, name: "To Do" },
 				{ id: 2, name: "In Progress" },
 				{ id: 3, name: "Blocked" },

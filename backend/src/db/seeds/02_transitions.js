@@ -4,10 +4,10 @@
  */
 exports.seed = async function (knex) {
 	// Deletes ALL existing entries
-	return knex('transitions').del()
+	return knex('transition').del()
 		.then(function () {
 			// Inserts seed entries
-			return knex('transitions').insert([
+			return knex('transition').insert([
 				{ from: 1, to: 2 },
 				{ from: 2, to: 3 },
 				{ from: 2, to: 4 },
