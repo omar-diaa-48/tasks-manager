@@ -17,14 +17,6 @@ export class User extends BaseEntity {
 	})
 	password: string;
 
-	// @ManyToOne(type => User)
-	// @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
-	// user: User;
-
 	@OneToMany(() => Todo, todo => todo.user)
 	todos: Todo[];
-
-	// @ManyToOne(type => Status)
-	// @JoinColumn({ name: 'statusId', referencedColumnName: 'id' })
-	// status: Status;
 }
