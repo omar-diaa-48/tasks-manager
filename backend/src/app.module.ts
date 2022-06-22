@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { TodoModule } from './modules/todos/todo.module';
+import modules from './modules';
 
 @Module({
 	imports: [
@@ -30,7 +30,7 @@ import { TodoModule } from './modules/todos/todo.module';
 			inject: [ConfigService]
 		}),
 
-		TodoModule
+		...modules
 	],
 	controllers: [],
 	providers: [],
