@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Todo } from "../todos/todo.entity";
 
-@Entity({ name: 'user', orderBy: { date: 'DESC' } })
+@Entity({ name: 'user', orderBy: { id: 'ASC' } })
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
