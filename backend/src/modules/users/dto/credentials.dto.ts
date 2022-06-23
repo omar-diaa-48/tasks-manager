@@ -10,5 +10,5 @@ export class CredentialsDTO {
 	@ApiProperty()
 	@IsDefined()
 	@IsString()
-	password: number;
+	password: string;
 }
