@@ -13,7 +13,7 @@ export class UserController {
 		private service: UserService
 	) { }
 
-	@Post()
+	@Post("signup")
 	@UsePipes(ValidationPipe)
 	signup(
 		@Body() signupDTO: CredentialsDTO
@@ -21,7 +21,7 @@ export class UserController {
 		return this.service.signup(signupDTO);
 	}
 
-	@Post()
+	@Post("signin")
 	@UsePipes(ValidationPipe)
 	signin(
 		@Body() signinDTO: CredentialsDTO
