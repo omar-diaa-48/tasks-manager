@@ -1,11 +1,12 @@
-import { useRoutes } from 'react-router-dom';
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import Home from './pages/Home';
 
 const AppRoutes = () => {
 	const routes = useRoutes([
-		{ path: "*", element: < NotFound /> },
+		// { path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
-		{ path: '/sign-in', element: <SigninModal /> },
-		{ path: '/sign-up', element: <SignupModal /> },
+		// { path: '/sign-in', element: <SigninModal /> },
+		// { path: '/sign-up', element: <SignupModal /> },
 	])
 
 	return routes;
@@ -13,7 +14,9 @@ const AppRoutes = () => {
 
 function App() {
 	return (
-		<div></div>
+		<Router>
+			<AppRoutes />
+		</Router>
 	);
 }
 
