@@ -39,7 +39,7 @@ const { signinSuccess, signupSuccess, signoutSuccess } = slice.actions
 
 export const signin = ({ username, password }) => async dispatch => {
 	try {
-		const response = await axiosInstance.post("/user/signin", {
+		const response = await axiosInstance.post("/users/signin", {
 			username,
 			password
 		})
@@ -59,7 +59,7 @@ export const signinJWT = () => async dispatch => {
 		const token = localStorage.getItem('token');
 		axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-		const response = await axiosInstance.post('/user/refresh-token')
+		const response = await axiosInstance.post('/users/refresh-token')
 
 		const data = response.data;
 
@@ -78,7 +78,7 @@ export const signinJWT = () => async dispatch => {
 
 export const signup = ({ username, password }) => async dispatch => {
 	try {
-		const response = await axiosInstance.post("/user/signup", {
+		const response = await axiosInstance.post("/users/signup", {
 			username,
 			password
 		})
