@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
-import { JwtPayload } from "src/types/jwt-payload";
+import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { BaseRepository } from "../base/base-repository";
 import { CredentialsDTO } from "./dto/credentials.dto";
 import { User } from "./user.entity";
@@ -55,6 +55,29 @@ export class UserService {
 		}
 
 		delete user.password;
+
+		const payload: JwtPayload = {
+			id: user.id,
+			username: user.username
+		}
+
+		const accessToken = this.jwtService.sign(payload);
+
+		payload.accessToken = accessToken;
+
+		return payload;
+	}
+
+	async jwtSignIn(user: JwtPayload): Promise<JwtPayload> {
+		if (!user) {
+			throw new UnauthorizedException()
+		}
+
+		user = await this.repository.findOneBy({ id: user.id })
+
+		if (!user) {
+			throw new UnauthorizedException()
+		}
 
 		const payload: JwtPayload = {
 			id: user.id,

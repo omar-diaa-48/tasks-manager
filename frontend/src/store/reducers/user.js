@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../utilities/api';
 
 // Slice
@@ -37,7 +37,7 @@ export default slice.reducer
 
 const { signinSuccess, signupSuccess, signoutSuccess } = slice.actions
 
-export const signin = ({ username, password }) => async dispatch => {
+export const signin = createAsyncThunk('store/users/signin', async ({ username, password }, { rejectWithValue, dispatch }) => {
 	try {
 		const response = await axiosInstance.post("/users/signin", {
 			username,
@@ -50,9 +50,9 @@ export const signin = ({ username, password }) => async dispatch => {
 
 		return Promise.resolve();
 	} catch (error) {
-		return console.error(error.message);
+		return rejectWithValue(error);
 	}
-}
+})
 
 export const signinJWT = () => async dispatch => {
 	try {
@@ -76,7 +76,7 @@ export const signinJWT = () => async dispatch => {
 	}
 };
 
-export const signup = ({ username, password }) => async dispatch => {
+export const signup = createAsyncThunk('store/users/signup', async ({ username, password }, { rejectWithValue, dispatch }) => {
 	try {
 		const response = await axiosInstance.post("/users/signup", {
 			username,
@@ -89,9 +89,9 @@ export const signup = ({ username, password }) => async dispatch => {
 
 		return Promise.resolve();
 	} catch (error) {
-		return console.error(error.message);
+		return rejectWithValue(error);
 	}
-}
+})
 
 export const signout = () => async dispatch => {
 	dispatch(signoutSuccess())
