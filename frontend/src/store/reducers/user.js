@@ -1,13 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../utilities/api';
-
-export const getProfile = createAsyncThunk("store/user/getProfile", async () => {
-	const response = await axiosInstance.get("/user/profile")
-
-	const data = response.data;
-
-	return data;
-})
 
 // Slice
 const slice = createSlice({
@@ -38,12 +30,6 @@ const slice = createSlice({
 				data: null
 			}
 		},
-	},
-	extraReducers: {
-		[getProfile.fulfilled]: (state, action) => ({
-			...state,
-			profile: action.payload
-		})
 	}
 });
 export default slice.reducer
@@ -53,7 +39,7 @@ const { signinSuccess, signupSuccess, signoutSuccess } = slice.actions
 
 export const signin = ({ username, password }) => async dispatch => {
 	try {
-		const response = await axiosInstance.post("/auth/signin", {
+		const response = await axiosInstance.post("/user/signin", {
 			username,
 			password
 		})
@@ -73,7 +59,7 @@ export const signinJWT = () => async dispatch => {
 		const token = localStorage.getItem('token');
 		axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-		const response = await axiosInstance.post('/auth/refresh-token')
+		const response = await axiosInstance.post('/user/refresh-token')
 
 		const data = response.data;
 
@@ -92,7 +78,7 @@ export const signinJWT = () => async dispatch => {
 
 export const signup = ({ username, password }) => async dispatch => {
 	try {
-		const response = await axiosInstance.post("/auth/signup", {
+		const response = await axiosInstance.post("/user/signup", {
 			username,
 			password
 		})

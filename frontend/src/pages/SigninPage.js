@@ -1,8 +1,11 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { signin } from "../store/reducers/user"
 
 export default function SigninModal() {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	const [formValues, setFormValues] = useState({
 		username: "",
@@ -18,6 +21,10 @@ export default function SigninModal() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(signin(formValues))
+			.then(() => {
+				navigate("/")
+			})
 	}
 
 	return (
