@@ -1,12 +1,12 @@
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 import { BaseEntity, Repository } from "typeorm";
 
-export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity> implements IBaseRepository<Entity> {
-	async getAll(relationsToLoad: string[] = []): Promise<Entity[]> {
+export class BaseRepository<TEntity extends BaseEntity> extends Repository<TEntity> implements IBaseRepository<TEntity> {
+	async getAll(relationsToLoad: string[] = []): Promise<TEntity[]> {
 		return this.find({ relations: relationsToLoad });
 	}
 
-	async getById(recordId: number, relationsToLoad: string[] = []): Promise<Entity> {
+	async getById(recordId: number, relationsToLoad: string[] = []): Promise<TEntity> {
 		this.checkRecordIdOrFail(recordId);
 
 		const findConditions: any = {
@@ -25,7 +25,7 @@ export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity
 		return record;
 	}
 
-	async updateOne(recordId: number, updateDto: object): Promise<Entity> {
+	async updateOne(recordId: number, updateDto: object): Promise<TEntity> {
 		this.checkRecordIdOrFail(recordId);
 
 		const findConditions: any = {
@@ -53,7 +53,7 @@ export class BaseRepository<Entity extends BaseEntity> extends Repository<Entity
 		return record;
 	}
 
-	async addOne(createDto: object): Promise<Entity> {
+	async addOne(createDto: object): Promise<TEntity> {
 		const record = this.create();
 
 		// for every key in the relations to be loaded, check if it exists and add it
