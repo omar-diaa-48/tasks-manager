@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { IsAuthenticatedMiddleware } from './middlewares/is-authenticated.middleware';
 import modules from './modules';
 
 @Module({
@@ -35,4 +36,11 @@ import modules from './modules';
 	controllers: [],
 	providers: [],
 })
-export class AppModule { }
+
+export class AppModule implements NestModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(IsAuthenticatedMiddleware)
+			.forRoutes('/')
+	}
+}
