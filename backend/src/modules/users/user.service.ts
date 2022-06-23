@@ -1,5 +1,5 @@
 
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
@@ -47,12 +47,50 @@ export class UserService {
 		return payload;
 	}
 
-	signin(signinDTO: CredentialsDTO): Promise<JwtPayload> {
-		console.log(signinDTO);
-		return this.repository.addOne(signinDTO);
+	async signin(signinDTO: CredentialsDTO): Promise<JwtPayload> {
+		const user = await this.validatePassword(signinDTO);
+
+		if (!user) {
+			throw new UnauthorizedException('Invalid credentials')
+		}
+
+		delete user.password;
+
+		const payload: JwtPayload = {
+			id: user.id,
+			username: user.username
+		}
+
+		const accessToken = this.jwtService.sign(payload);
+
+		payload.accessToken = accessToken;
+
+		return payload;
+	}
+
+	async validatePassword(credentialsDto: CredentialsDTO): Promise<User> {
+		const { username, password } = credentialsDto;
+
+		const user = await this.repository.findOne({
+			where: {
+				username
+			},
+			select: ['id', 'username', 'password']
+		});
+
+		if (user && await this.comparePasswordBcrypt(password, user.password)) {
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	async comparePasswordBcrypt(usedPassword: string, userPassword: string): Promise<boolean> {
+		return await bcrypt.compare(usedPassword, userPassword)
 	}
 
 	hashPassword(password: string): string {
 		return bcrypt.hashSync(password, 10);
 	}
+
 }
