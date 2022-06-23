@@ -116,4 +116,8 @@ export class UserService {
 		return bcrypt.hashSync(password, 10);
 	}
 
+	decode(accessToken: string): any {
+		return this.jwtService.decode(accessToken);
+	}
+
 }

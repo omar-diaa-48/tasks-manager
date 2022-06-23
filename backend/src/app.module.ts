@@ -13,8 +13,6 @@ import modules from './modules';
 
 		// configure database configuration
 		TypeOrmModule.forRootAsync({
-			imports: [ConfigModule],
-
 			useFactory: async (configService: ConfigService) => {
 				return {
 					type: 'mysql',
