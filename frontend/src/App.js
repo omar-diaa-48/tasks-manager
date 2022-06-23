@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CheckAuth from './components/CheckAuth';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import SigninModal from './pages/SigninPage';
@@ -19,10 +20,12 @@ const AppRoutes = () => {
 
 function App() {
 	return (
-		<Router>
-			<AppRoutes />
-			<ToastContainer />
-		</Router>
+		<CheckAuth>
+			<Router>
+				<AppRoutes />
+				<ToastContainer />
+			</Router>
+		</CheckAuth>
 	);
 }
 
