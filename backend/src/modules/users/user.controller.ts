@@ -1,8 +1,8 @@
 
 import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { JwtPayload } from "src/types/jwt-payload";
 import { CredentialsDTO } from "./dto/credentials.dto";
-import { User } from "./user.entity";
 import { UserService } from "./user.service";
 
 
@@ -17,7 +17,7 @@ export class UserController {
 	@UsePipes(ValidationPipe)
 	signup(
 		@Body() signupDTO: CredentialsDTO
-	): Promise<User> {
+	): Promise<JwtPayload> {
 		return this.service.signup(signupDTO);
 	}
 
@@ -25,7 +25,7 @@ export class UserController {
 	@UsePipes(ValidationPipe)
 	signin(
 		@Body() signinDTO: CredentialsDTO
-	): Promise<User> {
+	): Promise<JwtPayload> {
 		return this.service.signin(signinDTO);
 	}
 }
