@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 const AppRoutes = () => {
 	const routes = useRoutes([
-		// { path: "*", element: < NotFound /> },
+		{ path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
 		// { path: '/sign-in', element: <SigninModal /> },
 		// { path: '/sign-up', element: <SignupModal /> },
