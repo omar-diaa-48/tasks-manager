@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
+import { getStatuses } from "../../../store/reducers/status";
 import TaskList from "./TaskList";
 
 export default function Tasks() {
+	const dispatch = useDispatch();
+	// const statuses = useSelector(({ statuses }) => statuses)
+
+	useEffect(() => {
+		dispatch(getStatuses());
+	}, [dispatch])
+
 	const [items, setItems] = useState({
 		"To Do": [{ id: "T-1", title: "1", description: "Very interesting" }],
 		"In Progress": [{ id: "T-2", title: "1" }, { id: "T-11", title: "2" }],
