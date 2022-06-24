@@ -16,6 +16,8 @@ const errorHandler = (api) => (next) => (action) => {
 	if (isAsyncThunkAction(action)) {
 		const { dispatch } = api;
 
+		console.log({action});
+
 		//exclude get requests errors from being notified in the UI 
 		if (!action?.type?.includes('get')) {
 

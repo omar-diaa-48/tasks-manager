@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../store/reducers/user";
 
 // const schema = yup.object().shape({
 // 	username: yup.string().email('Please enter a valid email').required('You must enter a email'),
@@ -7,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 // });
 
 export default function SignupModal() {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [formValues, setFormValues] = useState({
 		username: "",
@@ -23,6 +26,10 @@ export default function SignupModal() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(signup(formValues))
+			.then(() => {
+				navigate("/")
+			})
 	}
 
 	return (
