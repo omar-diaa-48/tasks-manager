@@ -1,7 +1,10 @@
 import { Droppable } from "react-beautiful-dnd";
+import { useNavigate } from "react-router-dom";
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ title, items }) {
+export default function TaskList({ title, items, canAdd }) {
+	const navigate = useNavigate();
+
 	const variants = {
 		"To Do": "bg-slate-200",
 		"In Progress": "bg-orange-200",
@@ -20,16 +23,22 @@ export default function TaskList({ title, items }) {
 						<h3 className="text-lg">{title}</h3>
 					</div>
 
-					<ul className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
+					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
 							items.map((item, index) => (
 								<TaskItem key={item.id} id={item.id} index={index} title={item.title} description={item.description} />
 							))
 						}
-					</ul>
+					</div>
+
+					{canAdd && <button class="mt-3" onClick={() => navigate("/submit")}>Add a card...</button>}
 					{provided.placeholder}
 				</div>
 			)}
 		</Droppable>
 	)
+}
+
+TaskList.defaultProps = {
+	canAdd: false
 }
