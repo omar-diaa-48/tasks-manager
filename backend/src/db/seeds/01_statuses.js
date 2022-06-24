@@ -8,12 +8,12 @@ exports.seed = async function (knex) {
 		.then(function () {
 			// Inserts seed entries
 			return knex('status').insert([
-				{ id: 1, name: "To Do" },
-				{ id: 2, name: "In Progress" },
-				{ id: 3, name: "Blocked" },
-				{ id: 4, name: "In QA" },
-				{ id: 5, name: "Done" },
-				{ id: 6, name: "Deployed" }
+				{ id: "S_1", name: "To Do" },
+				{ id: "S_2", name: "In Progress" },
+				{ id: "S_3", name: "Blocked" },
+				{ id: "S_4", name: "In QA" },
+				{ id: "S_5", name: "Done" },
+				{ id: "S_6", name: "Deployed" }
 			]);
 		});
 };

@@ -8,13 +8,13 @@ exports.seed = async function (knex) {
 		.then(function () {
 			// Inserts seed entries
 			return knex('transition').insert([
-				{ from: 1, to: 2 },
-				{ from: 2, to: 3 },
-				{ from: 2, to: 4 },
-				{ from: 3, to: 1 },
-				{ from: 4, to: 1 },
-				{ from: 4, to: 5 },
-				{ from: 5, to: 6 }
+				{ from: "S_1", to: "S_2" },
+				{ from: "S_2", to: "S_3" },
+				{ from: "S_2", to: "S_4" },
+				{ from: "S_3", to: "S_1" },
+				{ from: "S_4", to: "S_1" },
+				{ from: "S_4", to: "S_5" },
+				{ from: "S_5", to: "S_6" }
 			]);
 		});
 };
