@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Status } from "../status/status.entity";
 import { User } from "../users/user.entity";
 
@@ -19,7 +19,7 @@ export class Todo extends BaseEntity {
 	})
 	description: string;
 
-	@OneToOne(type => User)
+	@ManyToOne(type => User)
 	@JoinColumn({ name: 'user', referencedColumnName: 'id' })
 	user: User;
 
@@ -28,7 +28,7 @@ export class Todo extends BaseEntity {
 	})
 	userId: number;
 
-	@OneToOne(type => Status)
+	@ManyToOne(type => Status)
 	@JoinColumn({ name: 'status', referencedColumnName: 'id' })
 	status: Status;
 
