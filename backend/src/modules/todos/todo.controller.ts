@@ -39,7 +39,7 @@ export class TodoController {
 		return this.service.addOne(addTodoDTO, user);
 	}
 
-	@Put(":todoId")
+	@Put(":todoId/status")
 	@UsePipes(ValidationPipe)
 	updateTodo(
 		@Param("todoId") todoId: string,
