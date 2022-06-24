@@ -1,71 +1,70 @@
-import "./style.scss"
+import { useState } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import TaskList from "./TaskList";
 
-export default function Tasks({ items }) {
+export default function Tasks() {
+	const [items, setItems] = useState({
+		"To Do": [{ id: "T-1", title: "1", description:"Very interesting" }],
+		"In Progress": [{ id: "T-2", title: "1" }, { id: "T-11", title: "2" }],
+		"Blocked": [{ id: "T-3", title: "1" }, { id: "T-10", title: "2" }],
+		"In QA": [{ id: "T-4", title: "1" }, { id: "T-9", title: "2" }],
+		"Done": [{ id: "T-5", title: "1" }, { id: "T-8", title: "2" }],
+		"Deployed": [{ id: "T-6", title: "1" }, { id: "T-7", title: "2" }, { id: "T-12", title: "3" }, { id: "T-13", title: "4" }]
+	});
+
+	const handleDragEnd = (result) => {
+		console.log(result);
+
+		// drag source
+		const source = result.source.droppableId;
+		// drop destination
+		const destination = result.destination.droppableId;
+		// index on drop
+		const destinationIndex = result.destination.index;
+		// id of dragged item
+		const draggableId = result.draggableId;
+		let draggedItem = null;
+
+		const freshItems = {};
+		const itemsKeys = Object.keys(items);
+
+		for (let i = 0; i < itemsKeys.length; i++) {
+			const key = itemsKeys[i];
+
+			if (key === source) {
+
+				if (source !== destination) {
+					draggedItem = items[key].find((item) => item.id !== draggableId);
+					freshItems[key] = items[key].filter((item) => item.id !== draggableId);
+
+
+					freshItems[destination] = [...items[destination].slice(0, destinationIndex), draggedItem, ...items[destination].slice(destinationIndex)]
+				}
+
+				else {
+					freshItems[key] = items[key];
+				}
+			}
+
+			else {
+				freshItems[key] = items[key];
+			}
+
+		}
+
+		setItems(freshItems)
+	}
+
 	return (
-		<div class="drag-container">
-			<ul class="drag-list">
-				<li class="drag-column drag-column-on-hold">
-					<span class="drag-column-header">
-						<h2>On Hold</h2>
-						<svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-							<path d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-						</svg>
-					</span>
-
-					<div class="drag-options" id="options1"></div>
-
-					<ul class="drag-inner-list" id="1">
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-					</ul>
-				</li>
-				<li class="drag-column drag-column-in-progress">
-					<span class="drag-column-header">
-						<h2>In Progress</h2>
-						<svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-							<path d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-						</svg>
-					</span>
-					<div class="drag-options" id="options2"></div>
-					<ul class="drag-inner-list" id="2">
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-					</ul>
-				</li>
-				<li class="drag-column drag-column-needs-review">
-					<span class="drag-column-header">
-						<h2>Needs Review</h2>
-						<svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-							<path d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-						</svg>
-					</span>
-					<div class="drag-options" id="options3"></div>
-					<ul class="drag-inner-list" id="3">
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-					</ul>
-				</li>
-				<li class="drag-column drag-column-approved">
-					<span class="drag-column-header">
-						<h2>Approved</h2>
-						<svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-							<path d="M0 0h24v24H0z" fill="none" />
-							<path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-						</svg>
-					</span>
-					<div class="drag-options" id="options4"></div>
-					<ul class="drag-inner-list" id="4">
-						<li class="drag-item"></li>
-						<li class="drag-item"></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+		<DragDropContext onDragEnd={handleDragEnd}>
+			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
+				<TaskList title="To Do" items={items["To Do"]} />
+				<TaskList title="In Progress" items={items["In Progress"]} />
+				<TaskList title="Blocked" items={items["Blocked"]} />
+				<TaskList title="In QA" items={items["In QA"]} />
+				<TaskList title="Done" items={items["Done"]} />
+				<TaskList title="Deployed" items={items["Deployed"]} />
+			</div>
+		</DragDropContext>
 	)
 }
