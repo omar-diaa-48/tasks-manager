@@ -31,7 +31,7 @@ export default function TaskList({ title, items, canAdd }) {
 						}
 					</div>
 
-					{canAdd && <button class="mt-3" onClick={() => navigate("/submit")}>Add a card...</button>}
+					{canAdd && <button className="mt-3" onClick={() => navigate("/submit")}>Add a card...</button>}
 					{provided.placeholder}
 				</div>
 			)}
