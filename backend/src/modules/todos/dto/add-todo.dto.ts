@@ -13,4 +13,9 @@ export class AddTodoDTO {
 	@IsString()
 	@MaxLength(255)
 	description: number;
+
+	@ApiProperty()
+	@IsDefined()
+	@IsString()
+	statusId: string;
 }

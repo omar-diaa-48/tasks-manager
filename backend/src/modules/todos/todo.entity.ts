@@ -1,11 +1,11 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from "typeorm";
 import { Status } from "../status/status.entity";
 import { User } from "../users/user.entity";
 
 @Entity({ name: 'todo', orderBy: { date: 'DESC' } })
 export class Todo extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryColumn()
+	id: string;
 
 	@Column({
 		nullable: false,
