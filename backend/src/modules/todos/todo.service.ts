@@ -1,7 +1,7 @@
 
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { generateID } from "src/utilities/helpers";
+import { generateID, groupByKey } from "src/utilities/helpers";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { BaseRepository } from "../base/base-repository";
 import { AddTodoDTO } from "./dto/add-todo.dto";
@@ -15,7 +15,7 @@ export class TodoService {
 		private repository: BaseRepository<Todo>
 	) { }
 
-	getAll(statusId?: number): Promise<Todo[]> {
+	async getAll(statusId?: number): Promise<Todo[]> {
 		const relations = ["user"]
 
 		let where = {};
@@ -26,7 +26,11 @@ export class TodoService {
 			}
 		}
 
-		return this.repository.find({ where, relations });
+		const todos = await this.repository.find({ where, relations });
+
+		const todosGroupedByStatusId = groupByKey(todos, "statusId", "status.title")
+
+		return todosGroupedByStatusId;
 	}
 
 	getById(id: string): Promise<Todo> {
