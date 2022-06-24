@@ -2,7 +2,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ title, items, canAdd }) {
+export default function TaskList({ id, title, items, canAdd }) {
 	const navigate = useNavigate();
 
 	const variants = {
@@ -16,7 +16,7 @@ export default function TaskList({ title, items, canAdd }) {
 
 	return (
 
-		<Droppable droppableId={title}>
+		<Droppable droppableId={id}>
 			{(provided) => (
 				<div className={`w-full h-min rounded ${variants[title]} p-2`}>
 					<div className="flex justify-between py-1">
@@ -25,7 +25,7 @@ export default function TaskList({ title, items, canAdd }) {
 
 					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
-							items.map((item, index) => (
+							items?.map((item, index) => (
 								<TaskItem key={item.id} id={item.id} index={index} title={item.title} description={item.description} />
 							))
 						}

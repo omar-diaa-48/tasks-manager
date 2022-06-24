@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TaskList from "../components/TaskList";
 import { getStatuses } from "../store/reducers/status";
+import { getTodos } from "../store/reducers/todo";
+import { STATUS_IDS } from "../utilities/global";
 
 export default function Tasks() {
 	const dispatch = useDispatch();
-	// const statuses = useSelector(({ statuses }) => statuses)
+	const statuses = useSelector(({ statuses }) => statuses)
+	const items = useSelector(({ todo }) => todo.data)
 
 	useEffect(() => {
-		dispatch(getStatuses());
-	}, [dispatch])
 
-	const [items, setItems] = useState({
-		"To Do": [{ id: "T-1", title: "1", description: "Very interesting" }],
-		"In Progress": [{ id: "T-2", title: "1" }, { id: "T-11", title: "2" }],
-		"Blocked": [{ id: "T-3", title: "1" }, { id: "T-10", title: "2" }],
-		"In QA": [{ id: "T-4", title: "1" }, { id: "T-9", title: "2" }],
-		"Done": [{ id: "T-5", title: "1" }, { id: "T-8", title: "2" }],
-		"Deployed": [{ id: "T-6", title: "1" }, { id: "T-7", title: "2" }, { id: "T-12", title: "3" }, { id: "T-13", title: "4" }]
-	});
+		Promise.all([
+			dispatch(getStatuses()),
+			dispatch(getTodos())
+		])
+
+	}, [dispatch])
 
 	const handleDragEnd = (result) => {
 		if (!result || !result.source || !result.destination) {
@@ -27,49 +26,29 @@ export default function Tasks() {
 		}
 
 		// drag source
-		const source = result.source.droppableId;
+		const sourceStatusId = result.source.droppableId;
 		// drop destination
-		const destination = result.destination.droppableId;
+		const destinationStatusId = result.destination.droppableId;
 		// index on drop
 		const destinationIndex = result.destination.index;
 		// id of dragged item
 		const draggableId = result.draggableId;
 		let draggedItem = null;
 
-		const freshItems = { ...items };
-		const itemsKeys = Object.keys(freshItems);
+		const currentStatus = statuses.find(status => status.id === sourceStatusId)
 
-		for (let i = 0; i < itemsKeys.length; i++) {
-			// current key (To Do, In Progress, etc...)
-			const key = itemsKeys[i];
-
-			if (key === source) {
-
-				// if drag and drop are not on the same list
-				if (source !== destination) {
-					draggedItem = freshItems[key].find((item) => item.id === draggableId);
-					freshItems[key] = freshItems[key].filter((item) => item.id !== draggableId);
-
-
-					// position the item in the right index
-					freshItems[destination] = [...freshItems[destination].slice(0, destinationIndex), draggedItem, ...freshItems[destination].slice(destinationIndex)]
-				}
-			}
-
-		}
-
-		setItems(freshItems)
+		console.log(currentStatus);
 	}
 
 	return (
 		<DragDropContext onDragEnd={handleDragEnd}>
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
-				<TaskList title="To Do" items={items["To Do"]} canAdd={true} />
-				<TaskList title="In Progress" items={items["In Progress"]} />
-				<TaskList title="Blocked" items={items["Blocked"]} />
-				<TaskList title="In QA" items={items["In QA"]} />
-				<TaskList title="Done" items={items["Done"]} />
-				<TaskList title="Deployed" items={items["Deployed"]} />
+				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} />
+				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} />
+				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} />
+				<TaskList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} />
+				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} />
+				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} />
 			</div>
 		</DragDropContext>
 	)

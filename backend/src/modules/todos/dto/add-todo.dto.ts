@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined, IsString, MaxLength } from "class-validator";
+import { IsDefined, IsNumber, IsString, MaxLength } from "class-validator";
 
 export class AddTodoDTO {
 	@ApiProperty()
@@ -16,6 +16,6 @@ export class AddTodoDTO {
 
 	@ApiProperty()
 	@IsDefined()
-	@IsString()
-	statusId: string;
+	@IsNumber()
+	statusId: number;
 }

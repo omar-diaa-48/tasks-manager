@@ -1,16 +1,16 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Transition } from "../transitions/transition.entity";
 
 @Entity({ name: 'status', orderBy: { id: 'ASC' } })
 export class Status extends BaseEntity {
-	@PrimaryColumn()
-	id: string;
+	@PrimaryGeneratedColumn()
+	id: number;
 
 	@Column({
 		nullable: false,
 		length: 100
 	})
-	name: string;
+	title: string;
 
 	@OneToMany(() => Transition, transition => transition.from)
 	fromTransitions: Transition[];
