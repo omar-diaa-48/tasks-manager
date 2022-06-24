@@ -1,10 +1,13 @@
 import { configureStore, isAsyncThunkAction, isRejected } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { showMessage } from './reducers/message';
+import message, { showMessage } from "./reducers/message";
+import status from "./reducers/status";
 import user from "./reducers/user";
 
 const reducer = combineReducers({
-	user
+	user,
+	message,
+	status
 })
 
 const errorHandler = (api) => (next) => (action) => {
