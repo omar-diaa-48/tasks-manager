@@ -12,9 +12,10 @@ const reducer = combineReducers({
 })
 
 const errorHandler = (api) => (next) => (action) => {
+	console.log({ action });
+
 	if (isAsyncThunkAction(action)) {
 
-		console.log({action});
 
 		//exclude get requests errors from being notified in the UI 
 		if (!action?.type?.includes('get')) {
@@ -26,7 +27,8 @@ const errorHandler = (api) => (next) => (action) => {
 					message = action?.payload?.message;
 				}
 
-				toast(message)
+				console.log({ message });
+				toast.error(message, { position: "bottom-right" })
 			}
 
 		}

@@ -37,7 +37,7 @@ export default function Todos() {
 		const currentStatus = statuses.find(status => status.title === sourceStatusId)
 
 		if (!currentStatus) {
-			toast.error("Invalid", { position: "bottom-right" });
+			toast.error("Invalid Action");
 			return;
 		}
 
@@ -45,7 +45,7 @@ export default function Todos() {
 		const transtion = currentStatus.fromTransitions.find(transtion => transtion.to.title === destinationStatusId);
 
 		if (!transtion) {
-			toast.error("Invalid", { position: "bottom-right" });
+			toast.error("Invalid Action");
 			return;
 		}
 
