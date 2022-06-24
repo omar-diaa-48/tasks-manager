@@ -8,35 +8,24 @@ export const generateID = (prefix?: string): string => {
  * Groups an array of records by a certain key.
  * @param {any[]} array
  * @param {string} keyId key to filter with 
- * @param {string} objectKey key for the object describing the key
- * @return {any[]} The result of grouping the array.
  */
-export const groupByKey = (array: any[], keyId: string, keyTitle: string, objectKey?: string): any[] => {
-	const groupedArray = [];
+export const groupByKey = (array: any[], keyId: string): any => {
+	const groupedArray = {};
 
-	array.forEach(item => {
+	array.forEach((item) => {
 		// check if the key already exists
-		const keyGroup = groupedArray.find(groupItem => groupItem["id"] === item[keyId])
+		const keyGroup = item[keyId]
 
-		if (keyGroup) { // if yes we add it to the items property
-			keyGroup.items.push(item)
-		} else { // if no, then we add the first item of this key group
-			let obj: any = {
-				id: item[keyId],
-				title: item[keyTitle],
-				items: [item]
-			}
+		if (groupedArray[keyGroup]) {
 
-			if (objectKey) {
-				obj = {
-					...obj,
-					[objectKey]: item[objectKey],
-				}
-			}
+			groupedArray[keyGroup].push(item)
 
-			groupedArray.push(obj)
+		}
+
+		else {
+			groupedArray[keyGroup] = [item]
 		}
 	});
 
-	return groupedArray.sort((a, b) => a.id - b.id);
+	return groupedArray;
 }

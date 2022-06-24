@@ -28,7 +28,7 @@ export class TodoService {
 
 		const todos = await this.repository.find({ where, relations });
 
-		const todosGroupedByStatusId = groupByKey(todos, "statusId", "status.title")
+		const todosGroupedByStatusId = groupByKey(todos, "statusId")
 
 		return todosGroupedByStatusId;
 	}
