@@ -1,6 +1,7 @@
 
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { BaseRepository } from "../base/base-repository";
 import { AddTodoDTO } from "./dto/add-todo.dto";
 import { UpdateTodoDTO } from "./dto/update-todo.dto";
@@ -21,7 +22,7 @@ export class TodoService {
 		return this.repository.findOneBy({ id });
 	}
 
-	async addOne(addTodoDTO: AddTodoDTO): Promise<Todo> {
+	async addOne(addTodoDTO: AddTodoDTO, user: JwtPayload): Promise<Todo> {
 		const record = this.repository.create();
 
 		for (const key in addTodoDTO) {
@@ -32,12 +33,15 @@ export class TodoService {
 			}
 		}
 
+		record.statusId = 1;
+		record.userId = user.id;
+
 		await record.save();
 
 		return record;
 	}
 
-	async updateOne(id: number, updateTodoDTO: UpdateTodoDTO): Promise<Todo> {
+	async updateOne(id: number, updateTodoDTO: UpdateTodoDTO, user: JwtPayload): Promise<Todo> {
 		const record = await this.repository.findOneBy({ id });
 
 		if (!record) {

@@ -1,6 +1,8 @@
 
 import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { GetUser } from "src/utilities/decorators/get-user.decorator";
+import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { AddTodoDTO } from "./dto/add-todo.dto";
 import { UpdateTodoDTO } from "./dto/update-todo.dto";
 import { Todo } from "./todo.entity";
@@ -29,18 +31,20 @@ export class TodoController {
 	@Post()
 	@UsePipes(ValidationPipe)
 	addTodo(
-		@Body() addTodoDTO: AddTodoDTO
+		@Body() addTodoDTO: AddTodoDTO,
+		@GetUser() user: JwtPayload
 	): Promise<Todo> {
-		return this.service.addOne(addTodoDTO);
+		return this.service.addOne(addTodoDTO, user);
 	}
 
 	@Put(":todoId")
 	@UsePipes(ValidationPipe)
 	updateTodo(
 		@Param("todoId") todoId: number,
-		@Body() updateTodoDTO: UpdateTodoDTO
+		@Body() updateTodoDTO: UpdateTodoDTO,
+		@GetUser() user: JwtPayload
 	): Promise<Todo> {
-		return this.service.updateOne(todoId, updateTodoDTO);
+		return this.service.updateOne(todoId, updateTodoDTO, user);
 	}
 
 	@Delete(":todoId")
