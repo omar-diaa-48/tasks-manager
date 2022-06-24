@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthRoute from './components/AuthRoute';
 import CheckAuth from './components/CheckAuth';
 import NavBar from './components/NavBar';
 import Tasks from './components/shared/tasks/Tasks';
@@ -14,8 +15,8 @@ const AppRoutes = () => {
 	const routes = useRoutes([
 		{ path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
-		{ path: '/manage', element: <Tasks /> },
-		{ path: '/submit', element: <Submit /> },
+		{ path: '/manage', element: <AuthRoute><Tasks /></AuthRoute> },
+		{ path: '/submit', element: <AuthRoute><Submit /></AuthRoute> },
 		{ path: '/sign-in', element: <SigninModal /> },
 		{ path: '/sign-up', element: <SignupModal /> },
 	])
