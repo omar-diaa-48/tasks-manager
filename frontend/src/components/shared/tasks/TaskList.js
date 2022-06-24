@@ -15,7 +15,7 @@ export default function TaskList({ title, items }) {
 
 		<Droppable droppableId={title}>
 			{(provided) => (
-				<div className={`w-full rounded ${variants[title]} p-2`}>
+				<div className={`w-full h-min rounded ${variants[title]} p-2`}>
 					<div className="flex justify-between py-1">
 						<h3 className="text-lg">{title}</h3>
 					</div>

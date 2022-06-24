@@ -4,7 +4,7 @@ import TaskList from "./TaskList";
 
 export default function Tasks() {
 	const [items, setItems] = useState({
-		"To Do": [{ id: "T-1", title: "1", description:"Very interesting" }],
+		"To Do": [{ id: "T-1", title: "1", description: "Very interesting" }],
 		"In Progress": [{ id: "T-2", title: "1" }, { id: "T-11", title: "2" }],
 		"Blocked": [{ id: "T-3", title: "1" }, { id: "T-10", title: "2" }],
 		"In QA": [{ id: "T-4", title: "1" }, { id: "T-9", title: "2" }],
@@ -13,7 +13,9 @@ export default function Tasks() {
 	});
 
 	const handleDragEnd = (result) => {
-		console.log(result);
+		if (!result || !result.source || !result.destination) {
+			return;
+		}
 
 		// drag source
 		const source = result.source.droppableId;
@@ -25,29 +27,24 @@ export default function Tasks() {
 		const draggableId = result.draggableId;
 		let draggedItem = null;
 
-		const freshItems = {};
-		const itemsKeys = Object.keys(items);
+		const freshItems = { ...items };
+		const itemsKeys = Object.keys(freshItems);
 
 		for (let i = 0; i < itemsKeys.length; i++) {
+			// current key (To Do, In Progress, etc...)
 			const key = itemsKeys[i];
 
 			if (key === source) {
 
+				// if drag and drop are not on the same list
 				if (source !== destination) {
-					draggedItem = items[key].find((item) => item.id !== draggableId);
-					freshItems[key] = items[key].filter((item) => item.id !== draggableId);
+					draggedItem = freshItems[key].find((item) => item.id === draggableId);
+					freshItems[key] = freshItems[key].filter((item) => item.id !== draggableId);
 
 
-					freshItems[destination] = [...items[destination].slice(0, destinationIndex), draggedItem, ...items[destination].slice(destinationIndex)]
+					// position the item in the right index
+					freshItems[destination] = [...freshItems[destination].slice(0, destinationIndex), draggedItem, ...freshItems[destination].slice(destinationIndex)]
 				}
-
-				else {
-					freshItems[key] = items[key];
-				}
-			}
-
-			else {
-				freshItems[key] = items[key];
 			}
 
 		}
