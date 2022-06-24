@@ -16,7 +16,7 @@ export default function TodoList({ id, title, items, canAdd }) {
 
 	return (
 
-		<Droppable droppableId={id}>
+		<Droppable droppableId={title}>
 			{(provided) => (
 				<div className={`w-full h-min rounded ${variants[title]} p-2`}>
 					<div className="flex justify-between py-1">
