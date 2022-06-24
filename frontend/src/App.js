@@ -4,12 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthRoute from './components/AuthRoute';
 import CheckAuth from './components/CheckAuth';
 import NavBar from './components/NavBar';
-import Tasks from './components/shared/tasks/Tasks';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import SigninModal from './pages/SigninPage';
 import SignupModal from './pages/SignupPage';
 import Submit from './pages/Submit';
+import Tasks from './pages/Tasks';
 
 const AppRoutes = () => {
 	const routes = useRoutes([

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { getStatuses } from "../../../store/reducers/status";
-import TaskList from "./TaskList";
+import TaskList from "../components/TaskList";
+import { getStatuses } from "../store/reducers/status";
 
 export default function Tasks() {
 	const dispatch = useDispatch();
