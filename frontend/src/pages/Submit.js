@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/shared/Input";
 import TextArea from "../components/shared/TextArea";
 import { addTodo } from "../store/reducers/todo";
 
 export default function Submit() {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const [formValues, setFormValues] = useState({
@@ -22,6 +24,9 @@ export default function Submit() {
 
 	const handleSubmit = () => {
 		dispatch(addTodo(formValues))
+			.then(() => {
+				navigate("/manage")
+			})
 	}
 
 	return (

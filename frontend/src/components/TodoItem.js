@@ -1,6 +1,6 @@
 import { Draggable } from 'react-beautiful-dnd';
 
-export default function TodoItem({ id, index, title, owner, description }) {
+export default function TodoItem({ id, index, title, owner, description, time }) {
 	return (
 		<Draggable key={id} draggableId={id} index={index}>
 			{(provided) => (
@@ -10,6 +10,7 @@ export default function TodoItem({ id, index, title, owner, description }) {
 					{...provided.dragHandleProps}
 				>
 					<p className='mb-4 bg-slate-200'>{owner} @ {title}</p>
+					<p className='mb-2'>{time}</p>
 					<p>{description}</p>
 				</div>
 			)}

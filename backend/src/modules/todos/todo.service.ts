@@ -38,7 +38,7 @@ export class TodoService {
 	}
 
 	async addOne(addTodoDTO: AddTodoDTO, user: JwtPayload): Promise<Todo> {
-		const record = this.repository.create();
+		const record = this.repository.create({ id: generateID("T") })
 
 		for (const key in addTodoDTO) {
 			const field = addTodoDTO[key];
@@ -48,7 +48,6 @@ export class TodoService {
 			}
 		}
 
-		record.id = generateID("T")
 		record.userId = user.id;
 
 		await record.save();
