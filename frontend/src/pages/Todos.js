@@ -3,12 +3,12 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import TodoList from "../components/TodoList";
 import { getStatuses } from "../store/reducers/status";
-import { getTodos } from "../store/reducers/todo";
+import { getTodos, updateTodo } from "../store/reducers/todo";
 import { STATUS_IDS } from "../utilities/global";
 
 export default function Todos() {
 	const dispatch = useDispatch();
-	const statuses = useSelector(({ statuses }) => statuses)
+	const statuses = useSelector(({ status }) => status.data)
 	const items = useSelector(({ todo }) => todo.data)
 
 	useEffect(() => {
@@ -25,19 +25,32 @@ export default function Todos() {
 			return;
 		}
 
+		console.log({ result });
+
 		// drag source
 		const sourceStatusId = result.source.droppableId;
 		// drop destination
 		const destinationStatusId = result.destination.droppableId;
-		// index on drop
-		const destinationIndex = result.destination.index;
 		// id of dragged item
 		const draggableId = result.draggableId;
-		let draggedItem = null;
 
-		const currentStatus = statuses.find(status => status.id === sourceStatusId)
+		// check on the current status if available
+		const currentStatus = statuses.find(status => status.title === sourceStatusId)
 
-		console.log(currentStatus);
+		if (!currentStatus) {
+			return;
+		}
+
+		// check if the next status is allowed
+		const transtion = currentStatus.fromTransitions.find(transtion => transtion.to.title === destinationStatusId);
+
+		if (!transtion) {
+			return;
+		}
+
+		console.log({ transtion });
+
+		dispatch(updateTodo({ todoId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
 	}
 
 	return (

@@ -25,9 +25,9 @@ export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rej
 	}
 })
 
-export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ todoId, statusId }, { rejectWithValue, dispatch }) => {
+export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ todoId, currentStatusId, nextStatusId }, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.put(`/todos/${todoId}/status`, { statusId })
+		const response = await axiosInstance.put(`/todos/${todoId}/status`, { statusId: nextStatusId })
 
 		const data = response.data;
 
@@ -41,7 +41,14 @@ export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ to
 const slice = createSlice({
 	name: 'todo',
 	initialState: {
-		data: {}
+		data: {
+			1: [],
+			2: [],
+			3: [],
+			4: [],
+			5: [],
+			6: []
+		}
 	},
 	extraReducers: {
 		[getTodos.fulfilled]: (state, action) => {
