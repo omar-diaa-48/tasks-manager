@@ -9,7 +9,8 @@ export default function Submit() {
 
 	const [formValues, setFormValues] = useState({
 		title: "",
-		description: ""
+		description: "",
+		statusId: 1
 	})
 
 	const handleChange = (e) => {
