@@ -13,7 +13,19 @@ export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { r
 	}
 })
 
-export const addTodo = createAsyncThunk('store/todos/addTodo', async ({ todoId, statusId }, { rejectWithValue, dispatch }) => {
+export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rejectWithValue, dispatch }) => {
+	try {
+		const response = await axiosInstance.post(`/todos`, val)
+
+		const data = response.data;
+
+		return data;
+	} catch (error) {
+		return rejectWithValue(error);
+	}
+})
+
+export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ todoId, statusId }, { rejectWithValue, dispatch }) => {
 	try {
 		const response = await axiosInstance.put(`/todos/${todoId}/status`, { statusId })
 
