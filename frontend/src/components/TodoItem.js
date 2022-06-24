@@ -4,7 +4,7 @@ export default function TodoItem({ id, index, title, owner, description, time })
 	return (
 		<Draggable key={id} draggableId={id} index={index}>
 			{(provided) => (
-				<div className="bg-white p-2 rounded mt-1 border-b border-grey cursor-pointer hover:bg-grey-lighter"
+				<div className="bg-white p-2 rounded mt-1 cursor-pointer border-b border-grey hover:bg-grey-lighter"
 					ref={provided.innerRef}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}

@@ -38,11 +38,6 @@ export class Todo extends BaseEntity {
 	statusId: number;
 
 	@Column({
-		default: false
-	})
-	is_deleted: boolean;
-
-	@Column({
 		nullable: false,
 		default: Date.now(),
 		type: "bigint"
