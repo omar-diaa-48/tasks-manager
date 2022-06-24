@@ -32,7 +32,7 @@ function App() {
 				<AppRoutes />
 				<ToastContainer />
 			</Router>
-		</CheckAuth>
+		</CheckAuth >
 	);
 }
 

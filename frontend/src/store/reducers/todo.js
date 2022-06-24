@@ -46,27 +46,24 @@ export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ to
 const slice = createSlice({
 	name: 'todo',
 	initialState: {
-		data: {
-			1: [],
-			2: [],
-			3: [],
-			4: [],
-			5: [],
-			6: []
-		}
+		1: [],
+		2: [],
+		3: [],
+		4: [],
+		5: [],
+		6: []
 	},
 	extraReducers: {
 		[getTodos.fulfilled]: (state, action) => {
-			return {
-				data: action.payload
-			};
+			return action.payload;
 		},
 		[updateTodo.fulfilled]: (state, action) => {
 			const { currentStatusId, nextStatusId, data } = action.payload;
+
 			return {
-				...state.data,
-				[currentStatusId]: state.data[currentStatusId].filter(item => item.id !== data.id),
-				[nextStatusId]: [...state.data[nextStatusId], data]
+				...state,
+				[currentStatusId]: state[currentStatusId].filter(item => item.id !== data.id),
+				[nextStatusId]: [data]
 			}
 		}
 	}

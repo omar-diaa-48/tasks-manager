@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 import TodoList from "../components/TodoList";
 import { getStatuses } from "../store/reducers/status";
 import { getTodos, updateTodo } from "../store/reducers/todo";
@@ -9,7 +10,7 @@ import { STATUS_IDS } from "../utilities/global";
 export default function Todos() {
 	const dispatch = useDispatch();
 	const statuses = useSelector(({ status }) => status.data)
-	const items = useSelector(({ todo }) => todo.data)
+	const items = useSelector(({ todo }) => todo)
 
 	useEffect(() => {
 
@@ -36,6 +37,7 @@ export default function Todos() {
 		const currentStatus = statuses.find(status => status.title === sourceStatusId)
 
 		if (!currentStatus) {
+			toast.error("Invalid", { position: "bottom-right" });
 			return;
 		}
 
@@ -43,6 +45,7 @@ export default function Todos() {
 		const transtion = currentStatus.fromTransitions.find(transtion => transtion.to.title === destinationStatusId);
 
 		if (!transtion) {
+			toast.error("Invalid", { position: "bottom-right" });
 			return;
 		}
 

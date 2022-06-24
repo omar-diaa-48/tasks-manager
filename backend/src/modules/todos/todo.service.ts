@@ -56,7 +56,7 @@ export class TodoService {
 	}
 
 	async updateOne(id: string, updateTodoDTO: UpdateTodoDTO, user: JwtPayload): Promise<Todo> {
-		const record = await this.repository.findOneBy({ id });
+		let record = await this.repository.findOneBy({ id });
 
 		if (!record) {
 			throw new NotFoundException(`${this.repository.metadata.tableName} table has no record with id ${id}`)
@@ -71,6 +71,8 @@ export class TodoService {
 		}
 
 		await record.save()
+
+		record = await this.repository.findOne({ where: { id }, relations: ["status", "user"] })
 
 		return record;
 	}

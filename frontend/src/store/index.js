@@ -1,20 +1,18 @@
 import { configureStore, isAsyncThunkAction, isRejected } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { combineReducers } from 'redux';
-import message, { showMessage } from "./reducers/message";
 import status from "./reducers/status";
 import todo from "./reducers/todo";
 import user from "./reducers/user";
 
 const reducer = combineReducers({
 	user,
-	message,
 	status,
 	todo
 })
 
 const errorHandler = (api) => (next) => (action) => {
 	if (isAsyncThunkAction(action)) {
-		const { dispatch } = api;
 
 		console.log({action});
 
@@ -28,8 +26,7 @@ const errorHandler = (api) => (next) => (action) => {
 					message = action?.payload?.message;
 				}
 
-
-				dispatch(showMessage(message))
+				toast(message)
 			}
 
 		}
