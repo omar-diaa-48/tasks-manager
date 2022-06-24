@@ -1,5 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Status } from "../status/status.entity";
+import { Todo } from "../todos/todo.entity";
 import { User } from "../users/user.entity";
 
 @Entity({ name: 'history', orderBy: { date: 'DESC' } })
@@ -16,7 +17,7 @@ export class History extends BaseEntity {
 	})
 	userId: number;
 
-	@ManyToOne(type => User)
+	@ManyToOne(type => Todo)
 	@JoinColumn({ name: 'todo', referencedColumnName: 'id' })
 	todo: User;
 
