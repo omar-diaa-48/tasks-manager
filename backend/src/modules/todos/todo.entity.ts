@@ -11,7 +11,7 @@ export class Todo extends BaseEntity {
 		nullable: false,
 		length: 100
 	})
-	name: string;
+	title: string;
 
 	@Column({
 		nullable: false,

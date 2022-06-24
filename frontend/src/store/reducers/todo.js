@@ -13,11 +13,23 @@ export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { r
 	}
 })
 
+export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rejectWithValue, dispatch }) => {
+	try {
+		const response = await axiosInstance.post("/todos", val)
+
+		const data = response.data;
+
+		return data;
+	} catch (error) {
+		return rejectWithValue(error);
+	}
+})
+
 // Slice
 const slice = createSlice({
 	name: 'todo',
 	initialState: {
-		data: []
+		data: {}
 	},
 	extraReducers: {
 		[getTodos.fulfilled]: (state, action) => {

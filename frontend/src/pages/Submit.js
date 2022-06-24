@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Input from "../components/shared/Input";
 import TextArea from "../components/shared/TextArea";
+import { addTodo } from "../store/reducers/todo";
 
 export default function Submit() {
+	const dispatch = useDispatch();
+
 	const [formValues, setFormValues] = useState({
 		title: "",
-		description: "",
-		statusId: 1
+		description: ""
 	})
 
 	const handleChange = (e) => {
@@ -16,7 +19,9 @@ export default function Submit() {
 		}))
 	}
 
-	const handleSubmit = () => { }
+	const handleSubmit = () => {
+		dispatch(addTodo(formValues))
+	}
 
 	return (
 		<div className="p-4 flex flex-col justify-center min-h-screen max-w-md mx-auto">

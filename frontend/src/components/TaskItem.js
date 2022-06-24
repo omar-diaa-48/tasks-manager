@@ -1,6 +1,6 @@
 import { Draggable } from 'react-beautiful-dnd';
 
-export default function TaskItem({ id, index, title, description }) {
+export default function TaskItem({ id, index, title, owner, description }) {
 	return (
 		<Draggable key={id} draggableId={id} index={index}>
 			{(provided) => (
@@ -9,7 +9,7 @@ export default function TaskItem({ id, index, title, description }) {
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 				>
-					{title}
+					{title} - {owner}
 					<br />
 					{description}
 				</div>

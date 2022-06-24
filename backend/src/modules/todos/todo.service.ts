@@ -15,7 +15,8 @@ export class TodoService {
 	) { }
 
 	getAll(): Promise<Todo[]> {
-		return this.repository.getAll();
+		const relations = ["user"]
+		return this.repository.find({ relations });
 	}
 
 	getById(id: number): Promise<Todo> {
