@@ -8,12 +8,14 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import SigninModal from './pages/SigninPage';
 import SignupModal from './pages/SignupPage';
+import Submit from './pages/Submit';
 
 const AppRoutes = () => {
 	const routes = useRoutes([
 		{ path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
 		{ path: '/manage', element: <Tasks /> },
+		{ path: '/submit', element: <Submit /> },
 		{ path: '/sign-in', element: <SigninModal /> },
 		{ path: '/sign-up', element: <SignupModal /> },
 	])

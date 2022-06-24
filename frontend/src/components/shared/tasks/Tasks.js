@@ -55,7 +55,7 @@ export default function Tasks() {
 	return (
 		<DragDropContext onDragEnd={handleDragEnd}>
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
-				<TaskList title="To Do" items={items["To Do"]} />
+				<TaskList title="To Do" items={items["To Do"]} canAdd={true} />
 				<TaskList title="In Progress" items={items["In Progress"]} />
 				<TaskList title="Blocked" items={items["Blocked"]} />
 				<TaskList title="In QA" items={items["In QA"]} />
