@@ -60,10 +60,12 @@ const slice = createSlice({
 		[updateTodo.fulfilled]: (state, action) => {
 			const { currentStatusId, nextStatusId, data } = action.payload;
 
+			const prevNextStatusData = state[nextStatusId] || []
+
 			return {
 				...state,
 				[currentStatusId]: state[currentStatusId].filter(item => item.id !== data.id),
-				[nextStatusId]: [data]
+				[nextStatusId]: [...prevNextStatusData, data]
 			}
 		}
 	}

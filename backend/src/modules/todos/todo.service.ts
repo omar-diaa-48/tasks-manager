@@ -78,9 +78,9 @@ export class TodoService {
 
 		await record.save()
 
-		record = await this.repository.findOne({ where: { id }, relations: ["status", "user"] })
-
 		await this.historyService.addTodoHistory(user.id, record.id, prevStatusId, newStatusId)
+
+		record = await this.repository.findOne({ where: { id }, relations: ["status", "user"] })
 
 		return record;
 	}
