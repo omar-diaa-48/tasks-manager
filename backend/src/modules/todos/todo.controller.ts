@@ -25,7 +25,7 @@ export class TodoController {
 
 	@Get(':todoId')
 	getTodoById(
-		@Param("todoId") todoId: number
+		@Param("todoId") todoId: string
 	): Promise<Todo> {
 		return this.service.getById(todoId);
 	}
@@ -42,7 +42,7 @@ export class TodoController {
 	@Put(":todoId")
 	@UsePipes(ValidationPipe)
 	updateTodo(
-		@Param("todoId") todoId: number,
+		@Param("todoId") todoId: string,
 		@Body() updateTodoDTO: UpdateTodoDTO,
 		@GetUser() user: JwtPayload
 	): Promise<Todo> {
