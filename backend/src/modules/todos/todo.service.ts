@@ -1,5 +1,5 @@
 
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { BaseRepository } from "../base/base-repository";
 import { AddTodoDTO } from "./dto/add-todo.dto";
@@ -18,15 +18,43 @@ export class TodoService {
 	}
 
 	getById(id: number): Promise<Todo> {
-		return this.repository.getById(id);
+		return this.repository.findOneBy({ id });
 	}
 
-	addOne(addTodoDTO: AddTodoDTO): Promise<Todo> {
-		return this.repository.addOne(addTodoDTO);
+	async addOne(addTodoDTO: AddTodoDTO): Promise<Todo> {
+		const record = this.repository.create();
+
+		for (const key in addTodoDTO) {
+			const field = addTodoDTO[key];
+
+			if (this.repository.metadata.hasColumnWithPropertyPath(key)) {
+				record[key] = field;
+			}
+		}
+
+		await record.save();
+
+		return record;
 	}
 
-	updateOne(id: number, updateTodoDTO: UpdateTodoDTO): Promise<Todo> {
-		return this.repository.updateOne(id, updateTodoDTO);
+	async updateOne(id: number, updateTodoDTO: UpdateTodoDTO): Promise<Todo> {
+		const record = await this.repository.findOneBy({ id });
+
+		if (!record) {
+			throw new NotFoundException(`${this.repository.metadata.tableName} table has no record with id ${id}`)
+		}
+
+		// for every key in the relations to be loaded, check if it exists and update it
+		for (const key in updateTodoDTO) {
+			if (key !== "id" && this.repository.metadata.hasColumnWithPropertyPath(key)) {
+				const field = updateTodoDTO[key];
+				record[key] = field
+			}
+		}
+
+		await record.save()
+
+		return record;
 	}
 
 	deleteOne(id: number): Promise<{ id: number }> {
