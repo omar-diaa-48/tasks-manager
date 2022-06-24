@@ -31,7 +31,12 @@ export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ to
 
 		const data = response.data;
 
-		return data;
+		return {
+			currentStatusId,
+			nextStatusId,
+			data,
+		};
+
 	} catch (error) {
 		return rejectWithValue(error);
 	}
@@ -55,6 +60,14 @@ const slice = createSlice({
 			return {
 				data: action.payload
 			};
+		},
+		[updateTodo.fulfilled]: (state, action) => {
+			const { currentStatusId, nextStatusId, data } = action.payload;
+			return {
+				...state.data,
+				[currentStatusId]: state.data[currentStatusId].filter(item => item.id !== data.id),
+				[nextStatusId]: [...state.data[nextStatusId], data]
+			}
 		}
 	}
 });

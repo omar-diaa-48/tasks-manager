@@ -25,8 +25,6 @@ export default function Todos() {
 			return;
 		}
 
-		console.log({ result });
-
 		// drag source
 		const sourceStatusId = result.source.droppableId;
 		// drop destination
@@ -47,8 +45,6 @@ export default function Todos() {
 		if (!transtion) {
 			return;
 		}
-
-		console.log({ transtion });
 
 		dispatch(updateTodo({ todoId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
 	}
