@@ -14,9 +14,18 @@ export class TodoService {
 		private repository: BaseRepository<Todo>
 	) { }
 
-	getAll(): Promise<Todo[]> {
+	getAll(statusId?: number): Promise<Todo[]> {
 		const relations = ["user"]
-		return this.repository.find({ relations });
+
+		let where = {};
+
+		if (statusId) {
+			where = {
+				statusId
+			}
+		}
+
+		return this.repository.find({ where, relations });
 	}
 
 	getById(id: number): Promise<Todo> {

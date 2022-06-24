@@ -1,5 +1,5 @@
 
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { GetUser } from "src/utilities/decorators/get-user.decorator";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
@@ -17,8 +17,10 @@ export class TodoController {
 	) { }
 
 	@Get()
-	getAllTodos(): Promise<Todo[]> {
-		return this.service.getAll();
+	getAllTodos(
+		@Query("statusId") statusId?: number
+	): Promise<Todo[]> {
+		return this.service.getAll(statusId);
 	}
 
 	@Get(':todoId')
