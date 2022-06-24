@@ -26,7 +26,7 @@ export default function TodoList({ id, title, items, canAdd }) {
 					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
 							items?.map((item, index) => (
-								<TodoItem key={item.id} id={item.id} index={index} title={item.title} description={item.description} />
+								<TodoItem key={item.id} id={item.id} index={index} owner={item.user.username} title={item.title} description={item.description} />
 							))
 						}
 					</div>

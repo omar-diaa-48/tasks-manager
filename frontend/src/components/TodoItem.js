@@ -9,9 +9,8 @@ export default function TodoItem({ id, index, title, owner, description }) {
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 				>
-					{title} - {owner}
-					<br />
-					{description}
+					<p className='mb-4 bg-slate-200'>{owner} @ {title}</p>
+					<p>{description}</p>
 				</div>
 			)}
 		</Draggable >
