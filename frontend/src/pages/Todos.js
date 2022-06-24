@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import TaskList from "../components/TaskList";
+import TodoList from "../components/TodoList";
 import { getStatuses } from "../store/reducers/status";
 import { getTodos } from "../store/reducers/todo";
 import { STATUS_IDS } from "../utilities/global";
 
-export default function Tasks() {
+export default function Todos() {
 	const dispatch = useDispatch();
 	const statuses = useSelector(({ statuses }) => statuses)
 	const items = useSelector(({ todo }) => todo.data)
@@ -43,12 +43,12 @@ export default function Tasks() {
 	return (
 		<DragDropContext onDragEnd={handleDragEnd}>
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
-				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} />
-				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} />
-				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} />
-				<TaskList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} />
-				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} />
-				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} />
+				<TodoList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} />
+				<TodoList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} />
+				<TodoList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} />
+				<TodoList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} />
+				<TodoList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} />
+				<TodoList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} />
 			</div>
 		</DragDropContext>
 	)

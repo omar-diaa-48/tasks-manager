@@ -1,8 +1,8 @@
 import { Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
-import TaskItem from "./TaskItem";
+import TodoItem from "./TodoItem";
 
-export default function TaskList({ id, title, items, canAdd }) {
+export default function TodoList({ id, title, items, canAdd }) {
 	const navigate = useNavigate();
 
 	const variants = {
@@ -26,7 +26,7 @@ export default function TaskList({ id, title, items, canAdd }) {
 					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
 							items?.map((item, index) => (
-								<TaskItem key={item.id} id={item.id} index={index} title={item.title} description={item.description} />
+								<TodoItem key={item.id} id={item.id} index={index} title={item.title} description={item.description} />
 							))
 						}
 					</div>
@@ -39,6 +39,6 @@ export default function TaskList({ id, title, items, canAdd }) {
 	)
 }
 
-TaskList.defaultProps = {
+TodoList.defaultProps = {
 	canAdd: false
 }

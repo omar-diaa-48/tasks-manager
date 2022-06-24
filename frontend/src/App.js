@@ -9,13 +9,13 @@ import NotFound from './pages/NotFound';
 import SigninModal from './pages/SigninPage';
 import SignupModal from './pages/SignupPage';
 import Submit from './pages/Submit';
-import Tasks from './pages/Tasks';
+import Todos from './pages/Todos';
 
 const AppRoutes = () => {
 	const routes = useRoutes([
 		{ path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
-		{ path: '/manage', element: <AuthRoute><Tasks /></AuthRoute> },
+		{ path: '/manage', element: <AuthRoute><Todos /></AuthRoute> },
 		{ path: '/submit', element: <AuthRoute><Submit /></AuthRoute> },
 		{ path: '/sign-in', element: <SigninModal /> },
 		{ path: '/sign-up', element: <SignupModal /> },

@@ -1,6 +1,6 @@
 import { Draggable } from 'react-beautiful-dnd';
 
-export default function TaskItem({ id, index, title, owner, description }) {
+export default function TodoItem({ id, index, title, owner, description }) {
 	return (
 		<Draggable key={id} draggableId={id} index={index}>
 			{(provided) => (
