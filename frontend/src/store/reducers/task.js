@@ -18,7 +18,7 @@ const slice = createSlice({
 	name: 'tasks',
 	initialState: null,
 	reducers: {
-		resetTask: (state, action) => null
+		resetTask: (state, action) => action.payload
 	},
 	extraReducers: {
 		[getTaskById.fulfilled]: (state, action) => action.payload

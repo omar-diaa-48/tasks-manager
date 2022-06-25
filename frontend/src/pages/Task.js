@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Input from "../components/shared/Input";
 import Select from "../components/shared/Select";
 import TextArea from "../components/shared/TextArea";
-import { getTaskById } from "../store/reducers/task";
+import { getTaskById, resetTask } from "../store/reducers/task";
 import { addTask } from "../store/reducers/tasks";
 import { getUsers } from "../store/reducers/users";
 
@@ -13,21 +13,32 @@ export default function Task() {
 	const dispatch = useDispatch();
 	const { taskId } = useParams();
 
-	const user = useSelector(({ user }) => user.data)
-	const users = useSelector(({ users }) => users)
-	const task = useSelector(({ task }) => task)
-
+	const user = useSelector(({ user }) => user.data);
+	const users = useSelector(({ users }) => users);
 	useEffect(() => {
 		dispatch(getUsers())
 	}, [dispatch])
 
 	useEffect(() => {
-		dispatch(getTaskById(taskId))
-	}, [dispatch, taskId])
+		if (taskId === "new") {
+			dispatch(resetTask({
+				title: "",
+				description: "",
+				assigneeId: user.id,
+				statusId: 1
+			}))
+		}
 
-	useEffect(() => {
-		setFormValues(task)
-	}, [task])
+		else {
+			dispatch(getTaskById(taskId))
+				.then(({ payload }) => {
+					console.log(payload);
+					if (payload) {
+						setFormValues(payload.task)
+					}
+				})
+		}
+	}, [dispatch, taskId, user])
 
 	const [formValues, setFormValues] = useState({
 		title: "",

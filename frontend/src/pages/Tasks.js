@@ -78,12 +78,12 @@ export default function Tasks() {
 			<TasksStatistics />
 
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
-				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTodo={handleOpenModal} />
-				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTodo={handleOpenModal} />
-				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} handleOpenTodo={handleOpenModal} />
-				<TaskList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} handleOpenTodo={handleOpenModal} />
-				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} handleOpenTodo={handleOpenModal} />
-				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTask={handleOpenModal} />
+				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTask={handleOpenModal} />
+				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} handleOpenTask={handleOpenModal} />
+				<TaskList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} handleOpenTask={handleOpenModal} />
+				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} handleOpenTask={handleOpenModal} />
+				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} handleOpenTask={handleOpenModal} />
 			</div>
 			<Modal isOpen={modal.isOpen} taskId={modal.taskId} handleClose={handleCloseModal} />
 		</DragDropContext>
