@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTodoById, resetTodo } from "../../store/reducers/todo";
 import { changeTimestampToDate } from "../../utilities";
+import { STATUS_VARIANTS } from "../../utilities/global";
 
 export default function Modal({ todoId, isOpen, handleClose }) {
 	const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 			<div className={`${isOpen ? 'block' : 'hidden'} fixed z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4 modal`}>
 				<div className="relative top-40 mx-auto shadow-xl rounded-md bg-white max-w-md">
 
-					<div className="flex justify-between items-center bg-green-500 text-white text-xl rounded-t-md px-4 py-2">
+					<div className={`flex justify-between items-center ${STATUS_VARIANTS[todoItem.todo.status.title]} text-white text-xl rounded-t-md px-4 py-2`}>
 						<h3>{todoItem.todo.title} made by {todoItem.todo.user.username}</h3>
 						<button onClick={handleClose}>x</button>
 					</div>

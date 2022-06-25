@@ -38,7 +38,7 @@ export class TodoService {
 	}
 
 	async getById(id: string): Promise<{ todo: Todo, history: History[] }> {
-		const record = await this.repository.findOne({ where: { id }, relations: ["user"] });
+		const record = await this.repository.findOne({ where: { id }, relations: ["status", "user"] });
 
 		if (!record) {
 			throw new NotFoundException(`${this.repository.metadata.tableName} table has no record with id ${id}`)
