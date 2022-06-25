@@ -2,8 +2,8 @@ import { configureStore, isAsyncThunkAction, isRejected } from '@reduxjs/toolkit
 import { toast } from 'react-toastify';
 import { combineReducers } from 'redux';
 import status from "./reducers/status";
-import todo from "./reducers/todo";
-import todos from "./reducers/todos";
+import task from "./reducers/task";
+import tasks from "./reducers/tasks";
 import user from "./reducers/user";
 import users from "./reducers/users";
 
@@ -11,8 +11,8 @@ const reducer = combineReducers({
 	users,
 	user,
 	status,
-	todos,
-	todo
+	tasks,
+	task
 })
 
 const errorHandler = (api) => (next) => (action) => {

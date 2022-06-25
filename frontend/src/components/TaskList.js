@@ -1,9 +1,9 @@
 import { Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import { STATUS_VARIANTS } from "../utilities/global";
-import TodoItem from "./TodoItem";
+import TaskItem from "./TaskItem";
 
-export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
+export default function TaskList({ id, title, items, canAdd, handleOpenTask }) {
 	const navigate = useNavigate();
 
 	return (
@@ -17,12 +17,12 @@ export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
 					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
 							items?.map((item, index) => (
-								<TodoItem key={item.id} id={item.id} index={index} time={item.date} owner={item.user.username} title={item.title} description={item.description} handleOpenTodo={handleOpenTodo} />
+								<TaskItem key={item.id} id={item.id} index={index} time={item.date} owner={item.user.username} title={item.title} description={item.description} handleOpenTask={handleOpenTask} />
 							))
 						}
 					</div>
 
-					{canAdd && <button className="mt-3" onClick={() => navigate("/todos/new")}>Add a card...</button>}
+					{canAdd && <button className="mt-3" onClick={() => navigate("/tasks/new")}>Add a card...</button>}
 					{provided.placeholder}
 				</div>
 			)}
@@ -30,6 +30,6 @@ export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
 	)
 }
 
-TodoList.defaultProps = {
+TaskList.defaultProps = {
 	canAdd: false
 }

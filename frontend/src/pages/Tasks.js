@@ -3,20 +3,20 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import Modal from "../components/shared/Modal";
-import TodoList from "../components/TodoList";
-import TodosStatistics from "../components/TodosStatistics";
+import TaskList from "../components/TaskList";
+import TasksStatistics from "../components/TasksStatistics";
 import { getStatuses } from "../store/reducers/status";
-import { getTodos, updateTodoStatus } from "../store/reducers/todos";
+import { getTasks, updateTaskStatus } from "../store/reducers/tasks";
 import { STATUS_IDS } from "../utilities/global";
 
-export default function Todos() {
+export default function Tasks() {
 	const dispatch = useDispatch();
 	const statuses = useSelector(({ status }) => status.data)
-	const items = useSelector(({ todos }) => todos)
+	const items = useSelector(({ tasks }) => tasks)
 
 	const [modal, setModal] = useState({
 		isOpen: false,
-		todoId: ''
+		taskId: ''
 	});
 
 	const handleCloseModal = () => {
@@ -26,10 +26,10 @@ export default function Todos() {
 		}))
 	}
 
-	const handleOpenModal = (todoId) => {
+	const handleOpenModal = (taskId) => {
 		setModal({
 			isOpen: true,
-			todoId
+			taskId
 		})
 	}
 
@@ -37,7 +37,7 @@ export default function Todos() {
 
 		Promise.all([
 			dispatch(getStatuses()),
-			dispatch(getTodos())
+			dispatch(getTasks())
 		])
 
 	}, [dispatch])
@@ -70,22 +70,22 @@ export default function Todos() {
 			return;
 		}
 
-		dispatch(updateTodoStatus({ todoId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
+		dispatch(updateTaskStatus({ taskId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
 	}
 
 	return (
 		<DragDropContext onDragEnd={handleDragEnd}>
-			<TodosStatistics />
+			<TasksStatistics />
 
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
-				<TodoList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTodo={handleOpenModal} />
-				<TodoList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTodo={handleOpenModal} />
-				<TodoList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} handleOpenTodo={handleOpenModal} />
-				<TodoList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} handleOpenTodo={handleOpenModal} />
-				<TodoList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} handleOpenTodo={handleOpenModal} />
-				<TodoList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTodo={handleOpenModal} />
+				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="In QA" id={STATUS_IDS.IN_QA} items={items[STATUS_IDS.IN_QA]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} handleOpenTodo={handleOpenModal} />
+				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} handleOpenTodo={handleOpenModal} />
 			</div>
-			<Modal isOpen={modal.isOpen} todoId={modal.todoId} handleClose={handleCloseModal} />
+			<Modal isOpen={modal.isOpen} taskId={modal.taskId} handleClose={handleCloseModal} />
 		</DragDropContext>
 	)
 }

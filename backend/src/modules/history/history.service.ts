@@ -11,11 +11,11 @@ export class HistoryService {
 		private repository: BaseRepository<History>
 	) { }
 
-	async addTodoHistory(userId: number, todoId: string, from: number, to: number): Promise<History> {
+	async addTaskHistory(userId: number, taskId: string, from: number, to: number): Promise<History> {
 		const record = this.repository.create();
 
 		record.userId = userId;
-		record.todoId = todoId;
+		record.taskId = taskId;
 		record.prevStatusId = from;
 		record.newStatusId = to;
 		record.date = Date.now();
@@ -25,7 +25,7 @@ export class HistoryService {
 		return record;
 	}
 
-	async getTodoHistory(todoId: string): Promise<History[]> {
-		return this.repository.find({ where: { todoId }, order: { date: "ASC" }, relations: ["user", "prevStatus", "newStatus"] })
+	async getTaskHistory(taskId: string): Promise<History[]> {
+		return this.repository.find({ where: { taskId }, order: { date: "ASC" }, relations: ["user", "prevStatus", "newStatus"] })
 	}
 }

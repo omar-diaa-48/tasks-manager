@@ -1,22 +1,33 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../components/shared/Input";
 import Select from "../components/shared/Select";
 import TextArea from "../components/shared/TextArea";
-import { addTodo } from "../store/reducers/todos";
+import { getTaskById } from "../store/reducers/task";
+import { addTask } from "../store/reducers/tasks";
 import { getUsers } from "../store/reducers/users";
 
-export default function Todo() {
+export default function Task() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { taskId } = useParams();
 
 	const user = useSelector(({ user }) => user.data)
 	const users = useSelector(({ users }) => users)
+	const task = useSelector(({ task }) => task)
 
 	useEffect(() => {
 		dispatch(getUsers())
 	}, [dispatch])
+
+	useEffect(() => {
+		dispatch(getTaskById(taskId))
+	}, [dispatch, taskId])
+
+	useEffect(() => {
+		setFormValues(task)
+	}, [task])
 
 	const [formValues, setFormValues] = useState({
 		title: "",
@@ -32,8 +43,8 @@ export default function Todo() {
 		}))
 	}
 
-	const handleTodo = () => {
-		dispatch(addTodo(formValues))
+	const handleTask = () => {
+		dispatch(addTask(formValues))
 			.then(() => {
 				navigate("/tasks")
 			})
@@ -53,8 +64,8 @@ export default function Todo() {
 
 				<TextArea handleChange={handleChange} value={formValues.description} name="description" title="Description" />
 
-				<button onClick={handleTodo} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
-					<span>Todo</span>
+				<button onClick={handleTask} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
+					<span>Task</span>
 				</button>
 
 			</div>

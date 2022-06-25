@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from "react-toastify";
 import axiosInstance from '../../utilities/api';
 
-export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { rejectWithValue, dispatch }) => {
+export const getTasks = createAsyncThunk('store/tasks/getTasks', async (val, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.get("/todos")
+		const response = await axiosInstance.get("/tasks")
 
 		const data = response.data;
 
@@ -14,9 +14,9 @@ export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { r
 	}
 })
 
-export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rejectWithValue, dispatch }) => {
+export const addTask = createAsyncThunk('store/tasks/addTask', async (val, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.post(`/todos`, val)
+		const response = await axiosInstance.post(`/tasks`, val)
 
 		const data = response.data;
 
@@ -27,9 +27,9 @@ export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rej
 	}
 })
 
-export const updateTodoStatus = createAsyncThunk('store/todos/updateTodoStatus', async ({ todoId, currentStatusId, nextStatusId }, { rejectWithValue, dispatch }) => {
+export const updateTaskStatus = createAsyncThunk('store/tasks/updateTaskStatus', async ({ taskId, currentStatusId, nextStatusId }, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.put(`/todos/${todoId}/status`, { statusId: nextStatusId })
+		const response = await axiosInstance.put(`/tasks/${taskId}/status`, { statusId: nextStatusId })
 
 		const data = response.data;
 
@@ -47,7 +47,7 @@ export const updateTodoStatus = createAsyncThunk('store/todos/updateTodoStatus',
 
 // Slice
 const slice = createSlice({
-	name: 'todos',
+	name: 'tasks',
 	initialState: {
 		1: [],
 		2: [],
@@ -57,9 +57,9 @@ const slice = createSlice({
 		6: []
 	},
 	extraReducers: {
-		[getTodos.fulfilled]: (state, action) => action.payload,
+		[getTasks.fulfilled]: (state, action) => action.payload,
 
-		[updateTodoStatus.fulfilled]: (state, action) => {
+		[updateTaskStatus.fulfilled]: (state, action) => {
 			const { currentStatusId, nextStatusId, data } = action.payload;
 
 			const prevDestinationStatusData = state[nextStatusId] || []

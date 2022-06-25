@@ -2,8 +2,8 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from
 import { Status } from "../status/status.entity";
 import { User } from "../users/user.entity";
 
-@Entity({ name: 'todo', orderBy: { date: 'DESC' } })
-export class Todo extends BaseEntity {
+@Entity({ name: 'task', orderBy: { date: 'DESC' } })
+export class Task extends BaseEntity {
 	@PrimaryColumn()
 	id: string;
 

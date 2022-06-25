@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Todo } from "../todos/todo.entity";
+import { Task } from "../tasks/task.entity";
 
 @Entity({ name: 'user', orderBy: { id: 'ASC' } })
 export class User extends BaseEntity {
@@ -18,6 +18,6 @@ export class User extends BaseEntity {
 	})
 	password: string;
 
-	@OneToMany(() => Todo, todo => todo.user)
-	todos: Todo[];
+	@OneToMany(() => Task, task => task.user)
+	tasks: Task[];
 }

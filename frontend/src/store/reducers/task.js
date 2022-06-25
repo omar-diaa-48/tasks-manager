@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../utilities/api';
 
-export const getTodoById = createAsyncThunk('store/todos/getTodoById', async (todoId, { rejectWithValue, dispatch }) => {
+export const getTaskById = createAsyncThunk('store/tasks/getTaskById', async (taskId, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.get(`/todos/${todoId}`)
+		const response = await axiosInstance.get(`/tasks/${taskId}`)
 
 		const data = response.data;
 
@@ -15,16 +15,16 @@ export const getTodoById = createAsyncThunk('store/todos/getTodoById', async (to
 
 // Slice
 const slice = createSlice({
-	name: 'todos',
+	name: 'tasks',
 	initialState: null,
 	reducers: {
-		resetTodo: (state, action) => null
+		resetTask: (state, action) => null
 	},
 	extraReducers: {
-		[getTodoById.fulfilled]: (state, action) => action.payload
+		[getTaskById.fulfilled]: (state, action) => action.payload
 	}
 });
 
 export default slice.reducer
 
-export const { resetTodo } = slice.actions;
+export const { resetTask } = slice.actions;

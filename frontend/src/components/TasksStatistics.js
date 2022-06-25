@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux"
 import { STATUS_IDS } from "../utilities/global"
 
-export default function TodosStatistics() {
-	const items = useSelector(({ todos }) => todos)
+export default function TasksStatistics() {
+	const items = useSelector(({ tasks }) => tasks)
 
 	return (
 		<div className="my-4 mx-48">
