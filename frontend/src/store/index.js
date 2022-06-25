@@ -5,8 +5,10 @@ import status from "./reducers/status";
 import todo from "./reducers/todo";
 import todos from "./reducers/todos";
 import user from "./reducers/user";
+import users from "./reducers/users";
 
 const reducer = combineReducers({
+	users,
 	user,
 	status,
 	todos,

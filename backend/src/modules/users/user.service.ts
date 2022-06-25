@@ -17,6 +17,10 @@ export class UserService {
 		private jwtService: JwtService
 	) { }
 
+	async getAll(): Promise<User[]> {
+		return this.repository.find();
+	}
+
 	async signup(signupDTO: CredentialsDTO): Promise<JwtPayload> {
 		const { username, password } = signupDTO;
 		let user: User;

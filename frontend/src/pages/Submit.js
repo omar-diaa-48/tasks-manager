@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/shared/Input";
+import Select from "../components/shared/Select";
 import TextArea from "../components/shared/TextArea";
 import { addTodo } from "../store/reducers/todos";
+import { getUsers } from "../store/reducers/users";
 
 export default function Submit() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
+	const user = useSelector(({ user }) => user.data)
+	const users = useSelector(({ users }) => users)
+
+	useEffect(() => {
+		dispatch(getUsers())
+	}, [dispatch])
+
 	const [formValues, setFormValues] = useState({
 		title: "",
 		description: "",
+		assigneeId: user.id,
 		statusId: 1
 	})
 
@@ -36,6 +46,8 @@ export default function Submit() {
 				<div className="flex items-center justify-center font-black m-3 mb-12">
 					<h1 className="tracking-wide text-3xl text-gray-900">Track your tasks</h1>
 				</div>
+
+				<Select handleChange={handleChange} value={formValues.assigneeId} name="assigneeId" title="Assignee" options={users} valueKey="id" valueTitle="username" />
 
 				<Input type="text" handleChange={handleChange} value={formValues.title} name="title" title="Title" />
 

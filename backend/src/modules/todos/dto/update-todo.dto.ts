@@ -6,4 +6,9 @@ export class UpdateTodoDTO {
 	@IsDefined()
 	@IsNumber()
 	statusId: number;
+
+	@ApiProperty()
+	@IsDefined()
+	@IsNumber()
+	assigneeId: number;
 }

@@ -1,9 +1,10 @@
 
-import { Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { GetUser } from "src/utilities/decorators/get-user.decorator";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { CredentialsDTO } from "./dto/credentials.dto";
+import { User } from "./user.entity";
 import { UserService } from "./user.service";
 
 
@@ -13,6 +14,11 @@ export class UserController {
 	constructor(
 		private service: UserService
 	) { }
+
+	@Get()
+	getAllUsers(): Promise<User[]> {
+		return this.service.getAll();
+	}
 
 	@Post("signup")
 	@UsePipes(ValidationPipe)

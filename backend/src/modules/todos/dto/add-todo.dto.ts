@@ -18,4 +18,9 @@ export class AddTodoDTO {
 	@IsDefined()
 	@IsNumber()
 	statusId: number;
+
+	@ApiProperty()
+	@IsDefined()
+	@IsNumber()
+	assigneeId: number;
 }

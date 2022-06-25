@@ -28,6 +28,15 @@ export class Todo extends BaseEntity {
 	})
 	userId: number;
 
+	@ManyToOne(type => User)
+	@JoinColumn({ name: 'user', referencedColumnName: 'id' })
+	assignee: User;
+
+	@Column({
+		name: "user"
+	})
+	assigneeId: number;
+
 	@ManyToOne(type => Status)
 	@JoinColumn({ name: 'status', referencedColumnName: 'id' })
 	status: Status;
