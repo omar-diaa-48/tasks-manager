@@ -54,7 +54,7 @@ export class TaskService {
 	}
 
 	async addOne(addTaskDTO: AddTaskDTO, user: JwtPayload): Promise<Task> {
-		const record = this.repository.create({ id: generateID("T") })
+		let record = this.repository.create({ id: generateID("T") })
 
 		for (const key in addTaskDTO) {
 			const field = addTaskDTO[key];
@@ -64,11 +64,13 @@ export class TaskService {
 			}
 		}
 
-		record.userId = user.id;
+		record.userId = addTaskDTO.assigneeId;
 
 		await record.save();
 
 		await this.historyService.addTaskHistory(user.id, record.id, 100, record.statusId)
+
+		record = await this.repository.findOne({ where: { id: record.id }, relations: ["status", "user"] })
 
 		return record;
 	}
@@ -107,7 +109,7 @@ export class TaskService {
 	async updateOne(id: string, updateTaskDTO: UpdateTaskDTO, user: JwtPayload): Promise<Task> {
 		let record = await this.repository.findOneBy({ id });
 
-		if (record.userId !== user.id) {
+		if ((record.userId != user.id) && (updateTaskDTO.userId != user.id)) {
 			throw new UnauthorizedException('Only owner of the task can update it')
 		}
 

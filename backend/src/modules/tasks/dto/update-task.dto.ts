@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 import { IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class UpdateTaskDTO {
@@ -16,6 +17,7 @@ export class UpdateTaskDTO {
 
 	@ApiProperty()
 	@IsOptional()
+	@Transform(({ value }) => parseInt(value))
 	@IsNumber()
 	userId?: number;
 }
