@@ -11,11 +11,11 @@ import { STATUS_IDS } from "../utilities/global";
 export default function Todos() {
 	const dispatch = useDispatch();
 	const statuses = useSelector(({ status }) => status.data)
-	const items = useSelector(({ todo }) => todo)
+	const items = useSelector(({ todos }) => todos)
 
 	const [modal, setModal] = useState({
 		isOpen: false,
-		todoId:''
+		todoId: ''
 	});
 
 	const handleCloseModal = () => {

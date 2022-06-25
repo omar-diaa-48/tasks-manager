@@ -27,13 +27,13 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 						<button onclick={handleClose}>x</button>
 					</div>
 
-					<div className="max-h-48 overflow-y-scroll p-4">
+					{/* <div className="max-h-48 overflow-y-scroll p-4">
 						{
 							todo.history.map(history => (
 								<p>{history.userId}</p>
 							))
 						}
-					</div>
+					</div> */}
 
 					<div className="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
 						<button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" onclick={handleClose}>Close (ESC)</button>

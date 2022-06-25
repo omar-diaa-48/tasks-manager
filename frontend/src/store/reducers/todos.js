@@ -54,18 +54,17 @@ const slice = createSlice({
 		6: []
 	},
 	extraReducers: {
-		[getTodos.fulfilled]: (state, action) => {
-			return action.payload;
-		},
+		[getTodos.fulfilled]: (state, action) => action.payload,
+
 		[updateTodo.fulfilled]: (state, action) => {
 			const { currentStatusId, nextStatusId, data } = action.payload;
 
-			const prevNextStatusData = state[nextStatusId] || []
+			const prevDestinationStatusData = state[nextStatusId] || []
 
 			return {
 				...state,
 				[currentStatusId]: state[currentStatusId].filter(item => item.id !== data.id),
-				[nextStatusId]: [...prevNextStatusData, data]
+				[nextStatusId]: [...prevDestinationStatusData, data]
 			}
 		}
 	}

@@ -15,7 +15,6 @@ export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
 	}
 
 	return (
-
 		<Droppable droppableId={title}>
 			{(provided) => (
 				<div className={`w-full h-min rounded ${variants[title]} p-2`}>
