@@ -24,7 +24,7 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 			return history.map(history => (
 				<div key={history.id} className="my-4">
 					<p>{changeTimestampToDate(history.date)}</p>
-					<p>{history.user.username} change the task from {history.prevStatus.title} to {history.newStatus.title}</p>
+					<p>{history.user.username} changed the task from {history.prevStatus.title} to {history.newStatus.title}</p>
 				</div>
 			))
 		}
