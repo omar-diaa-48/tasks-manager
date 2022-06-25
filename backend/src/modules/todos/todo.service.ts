@@ -4,6 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { generateID, groupByKey } from "src/utilities/helpers";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { BaseRepository } from "../base/base-repository";
+import { History } from "../history/history.entity";
 import { HistoryService } from "../history/history.service";
 import { AddTodoDTO } from "./dto/add-todo.dto";
 import { UpdateTodoDTO } from "./dto/update-todo.dto";
@@ -36,8 +37,19 @@ export class TodoService {
 		return todosGroupedByStatusId;
 	}
 
-	getById(id: string): Promise<Todo> {
-		return this.repository.findOneBy({ id });
+	async getById(id: string): Promise<{ todo: Todo, history: History[] }> {
+		const record = await this.repository.findOneBy({ id });
+
+		if (!record) {
+			throw new NotFoundException(`${this.repository.metadata.tableName} table has no record with id ${id}`)
+		}
+
+		const history = await this.historyService.getTodoHistory(record.id);
+
+		return {
+			todo: record,
+			history
+		}
 	}
 
 	async addOne(addTodoDTO: AddTodoDTO, user: JwtPayload): Promise<Todo> {
@@ -85,7 +97,7 @@ export class TodoService {
 		return record;
 	}
 
-	deleteOne(id: number): Promise<{ id: number }> {
+	async deleteOne(id: number): Promise<{ id: number }> {
 		return this.repository.deleteOne(id);
 	}
 }

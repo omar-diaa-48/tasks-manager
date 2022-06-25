@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, Valid
 import { ApiTags } from "@nestjs/swagger";
 import { GetUser } from "src/utilities/decorators/get-user.decorator";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
+import { History } from "../history/history.entity";
 import { AddTodoDTO } from "./dto/add-todo.dto";
 import { UpdateTodoDTO } from "./dto/update-todo.dto";
 import { Todo } from "./todo.entity";
@@ -26,7 +27,7 @@ export class TodoController {
 	@Get(':todoId')
 	getTodoById(
 		@Param("todoId") todoId: string
-	): Promise<Todo> {
+	): Promise<{ todo: Todo, history: History[] }> {
 		return this.service.getById(todoId);
 	}
 

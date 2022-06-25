@@ -3,11 +3,13 @@ import { toast } from 'react-toastify';
 import { combineReducers } from 'redux';
 import status from "./reducers/status";
 import todo from "./reducers/todo";
+import todos from "./reducers/todos";
 import user from "./reducers/user";
 
 const reducer = combineReducers({
 	user,
 	status,
+	todos,
 	todo
 })
 

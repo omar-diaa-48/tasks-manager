@@ -1,42 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../utilities/api';
 
-export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { rejectWithValue, dispatch }) => {
+export const getTodoById = createAsyncThunk('store/todos/getTodoById', async (todoId, { rejectWithValue, dispatch }) => {
 	try {
-		const response = await axiosInstance.get("/todos")
+		const response = await axiosInstance.get(`/todos/${todoId}`)
 
 		const data = response.data;
 
 		return data;
-	} catch (error) {
-		return rejectWithValue(error);
-	}
-})
-
-export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rejectWithValue, dispatch }) => {
-	try {
-		const response = await axiosInstance.post(`/todos`, val)
-
-		const data = response.data;
-
-		return data;
-	} catch (error) {
-		return rejectWithValue(error);
-	}
-})
-
-export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ todoId, currentStatusId, nextStatusId }, { rejectWithValue, dispatch }) => {
-	try {
-		const response = await axiosInstance.put(`/todos/${todoId}/status`, { statusId: nextStatusId })
-
-		const data = response.data;
-
-		return {
-			currentStatusId,
-			nextStatusId,
-			data,
-		};
-
 	} catch (error) {
 		return rejectWithValue(error);
 	}
@@ -44,31 +15,16 @@ export const updateTodo = createAsyncThunk('store/todos/updateTodo', async ({ to
 
 // Slice
 const slice = createSlice({
-	name: 'todo',
-	initialState: {
-		1: [],
-		2: [],
-		3: [],
-		4: [],
-		5: [],
-		6: []
+	name: 'todos',
+	initialState: null,
+	reducers: {
+		resetTodo: (state, action) => null
 	},
 	extraReducers: {
-		[getTodos.fulfilled]: (state, action) => {
-			return action.payload;
-		},
-		[updateTodo.fulfilled]: (state, action) => {
-			const { currentStatusId, nextStatusId, data } = action.payload;
-
-			const prevNextStatusData = state[nextStatusId] || []
-
-			return {
-				...state,
-				[currentStatusId]: state[currentStatusId].filter(item => item.id !== data.id),
-				[nextStatusId]: [...prevNextStatusData, data]
-			}
-		}
+		[getTodoById.fulfilled]: (state, action) => action.payload
 	}
 });
 
 export default slice.reducer
+
+export const { resetTodo } = slice.actions;

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/shared/Input";
 import TextArea from "../components/shared/TextArea";
-import { addTodo } from "../store/reducers/todo";
+import { addTodo } from "../store/reducers/todos";
 
 export default function Submit() {
 	const navigate = useNavigate();

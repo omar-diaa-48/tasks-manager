@@ -1,10 +1,10 @@
 import { Draggable } from 'react-beautiful-dnd';
 
-export default function TodoItem({ id, index, title, owner, description, time }) {
+export default function TodoItem({ id, index, title, owner, description, time, handleOpenTodo }) {
 	return (
 		<Draggable key={id} draggableId={id} index={index}>
 			{(provided) => (
-				<div className="bg-white p-2 rounded mt-1 cursor-pointer border-b border-grey hover:bg-grey-lighter"
+				<div onClick={() => handleOpenTodo(id, title)} className="bg-white p-2 rounded mt-1 cursor-pointer border-b border-grey hover:bg-grey-lighter"
 					ref={provided.innerRef}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}

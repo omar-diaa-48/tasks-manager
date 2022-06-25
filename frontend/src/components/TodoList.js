@@ -2,7 +2,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import TodoItem from "./TodoItem";
 
-export default function TodoList({ id, title, items, canAdd }) {
+export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
 	const navigate = useNavigate();
 
 	const variants = {
@@ -26,7 +26,7 @@ export default function TodoList({ id, title, items, canAdd }) {
 					<div className="m-4 text-sm mt-2" {...provided.droppableProps} ref={provided.innerRef}>
 						{
 							items?.map((item, index) => (
-								<TodoItem key={item.id} id={item.id} index={index} time={item.date} owner={item.user.username} title={item.title} description={item.description} />
+								<TodoItem key={item.id} id={item.id} index={index} time={item.date} owner={item.user.username} title={item.title} description={item.description} handleOpenTodo={handleOpenTodo} />
 							))
 						}
 					</div>
