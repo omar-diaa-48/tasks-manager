@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Input from "../components/shared/Input";
 import Select from "../components/shared/Select";
 import TextArea from "../components/shared/TextArea";
+import NotFound from "../pages/NotFound";
 import { getTaskById, resetTask } from "../store/reducers/task";
 import { addTask } from "../store/reducers/tasks";
 import { getUsers } from "../store/reducers/users";
@@ -59,6 +60,12 @@ export default function Task() {
 			.then(() => {
 				navigate("/tasks")
 			})
+	}
+
+	if (!formValues) {
+		return (
+			<NotFound />
+		)
 	}
 
 	return (
