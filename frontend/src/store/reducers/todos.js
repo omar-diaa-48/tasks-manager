@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from "react-toastify";
 import axiosInstance from '../../utilities/api';
 
 export const getTodos = createAsyncThunk('store/todos/getTodos', async (val, { rejectWithValue, dispatch }) => {
@@ -21,7 +22,8 @@ export const addTodo = createAsyncThunk('store/todos/addTodo', async (val, { rej
 
 		return data;
 	} catch (error) {
-		return rejectWithValue(error);
+		toast.error(error.response?.data?.message)
+		rejectWithValue(error);
 	}
 })
 
@@ -38,8 +40,8 @@ export const updateTodoStatus = createAsyncThunk('store/todos/updateTodoStatus',
 		};
 
 	} catch (error) {
-
-		return rejectWithValue(error);
+		toast.error(error.response?.data?.message)
+		rejectWithValue(error);
 	}
 })
 
