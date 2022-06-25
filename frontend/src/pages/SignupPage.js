@@ -27,8 +27,10 @@ export default function SignupModal() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(signup(formValues))
-			.then(() => {
-				navigate("/")
+			.then(({ payload }) => {
+				if (payload) {
+					navigate("/")
+				}
 			})
 	}
 

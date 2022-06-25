@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from "react-toastify";
 import axiosInstance from '../../utilities/api';
 
 // Slice
@@ -48,9 +49,10 @@ export const signin = createAsyncThunk('store/users/signin', async ({ username, 
 
 		dispatch(signinSuccess(data));
 
-		return Promise.resolve();
+		return data;
 	} catch (error) {
-		return rejectWithValue(error);
+		toast.error(error.response?.data?.message)
+		rejectWithValue(error)
 	}
 })
 
@@ -72,7 +74,7 @@ export const signinJWT = () => async dispatch => {
 		}
 
 	} catch (error) {
-		return console.error(error.message);
+		console.error(error.message);
 	}
 };
 
@@ -87,9 +89,10 @@ export const signup = createAsyncThunk('store/users/signup', async ({ username, 
 
 		dispatch(signupSuccess(data))
 
-		return Promise.resolve();
+		return data;
 	} catch (error) {
-		return rejectWithValue(error);
+		toast.error(error.response?.data?.message)
+		rejectWithValue(error);
 	}
 })
 

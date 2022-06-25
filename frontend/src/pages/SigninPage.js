@@ -22,8 +22,10 @@ export default function SigninModal() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(signin(formValues))
-			.then(() => {
-				navigate("/")
+			.then(({ payload }) => {
+				if(payload){
+					navigate("/")
+				}
 			})
 	}
 
