@@ -27,6 +27,19 @@ export const addTask = createAsyncThunk('store/tasks/addTask', async (val, { rej
 	}
 })
 
+export const saveTask = createAsyncThunk('store/tasks/saveTask', async ({ taskId, values }, { rejectWithValue, dispatch }) => {
+	try {
+		const response = await axiosInstance.put(`/tasks/${taskId}`, values)
+
+		const data = response.data;
+
+		return data;
+	} catch (error) {
+		toast.error(error.response?.data?.message)
+		rejectWithValue(error);
+	}
+})
+
 export const updateTaskStatus = createAsyncThunk('store/tasks/updateTaskStatus', async ({ taskId, currentStatusId, nextStatusId }, { rejectWithValue, dispatch }) => {
 	try {
 		const response = await axiosInstance.put(`/tasks/${taskId}/status`, { statusId: nextStatusId })

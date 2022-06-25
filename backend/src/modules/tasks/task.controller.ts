@@ -5,6 +5,7 @@ import { GetUser } from "src/utilities/decorators/get-user.decorator";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
 import { History } from "../history/history.entity";
 import { AddTaskDTO } from "./dto/add-task.dto";
+import { UpdateTaskStatusDTO } from "./dto/update-task-status.dto";
 import { UpdateTaskDTO } from "./dto/update-task.dto";
 import { Task } from "./task.entity";
 import { TaskService } from "./task.service";
@@ -44,10 +45,20 @@ export class TaskController {
 	@UsePipes(ValidationPipe)
 	updateTaskStatus(
 		@Param("taskId") taskId: string,
-		@Body() updateTaskDTO: UpdateTaskDTO,
+		@Body() updateTaskDTO: UpdateTaskStatusDTO,
 		@GetUser() user: JwtPayload
 	): Promise<Task> {
 		return this.service.updateStatus(taskId, updateTaskDTO, user);
+	}
+
+	@Put(":taskId")
+	@UsePipes(ValidationPipe)
+	updateTask(
+		@Param("taskId") taskId: string,
+		@Body() updateTaskDTO: UpdateTaskDTO,
+		@GetUser() user: JwtPayload
+	): Promise<Task> {
+		return this.service.updateOne(taskId, updateTaskDTO, user);
 	}
 
 	@Delete(":taskId")

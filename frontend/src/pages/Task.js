@@ -6,7 +6,7 @@ import Select from "../components/shared/Select";
 import TextArea from "../components/shared/TextArea";
 import NotFound from "../pages/NotFound";
 import { getTaskById, resetTask } from "../store/reducers/task";
-import { addTask } from "../store/reducers/tasks";
+import { addTask, saveTask } from "../store/reducers/tasks";
 import { getUsers } from "../store/reducers/users";
 
 export default function Task() {
@@ -55,11 +55,18 @@ export default function Task() {
 		}))
 	}
 
-	const handleTask = () => {
-		dispatch(addTask(formValues))
-			.then(() => {
-				navigate("/tasks")
-			})
+	const handleSave = () => {
+		if (taskId === "new") {
+			dispatch(addTask(formValues))
+				.then(() => {
+					navigate("/tasks")
+				})
+		} else {
+			dispatch(saveTask({ taskId, values: formValues }))
+				.then(() => {
+					navigate("/tasks")
+				})
+		}
 	}
 
 	if (!formValues) {
@@ -82,8 +89,8 @@ export default function Task() {
 
 				<TextArea handleChange={handleChange} value={formValues.description} name="description" title="Description" />
 
-				<button onClick={handleTask} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
-					<span>Task</span>
+				<button onClick={handleSave} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
+					<span>Save</span>
 				</button>
 
 			</div>
