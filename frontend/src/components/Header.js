@@ -9,7 +9,7 @@ export default function Header() {
 	const renderLinks = () => {
 		return user ? (
 			<div className="flex flex-col justify-between items-center mt-8">
-				<button onClick={() => navigate("/manage")} className="text-xl font-medium tracking-wider text-green-300 hover:text-green-500">
+				<button onClick={() => navigate("/tasks")} className="text-xl font-medium tracking-wider text-green-300 hover:text-green-500">
 					Try it out
 				</button>
 			</div>

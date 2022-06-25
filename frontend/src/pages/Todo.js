@@ -7,7 +7,7 @@ import TextArea from "../components/shared/TextArea";
 import { addTodo } from "../store/reducers/todos";
 import { getUsers } from "../store/reducers/users";
 
-export default function Submit() {
+export default function Todo() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -32,10 +32,10 @@ export default function Submit() {
 		}))
 	}
 
-	const handleSubmit = () => {
+	const handleTodo = () => {
 		dispatch(addTodo(formValues))
 			.then(() => {
-				navigate("/manage")
+				navigate("/tasks")
 			})
 	}
 
@@ -53,8 +53,8 @@ export default function Submit() {
 
 				<TextArea handleChange={handleChange} value={formValues.description} name="description" title="Description" />
 
-				<button onClick={handleSubmit} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
-					<span>Submit</span>
+				<button onClick={handleTodo} className="px-4 py-1.5 rounded-md shadow-lg bg-gradient-to-r from-pink-600 to-red-600 font-medium text-gray-100 block transition duration-300">
+					<span>Todo</span>
 				</button>
 
 			</div>

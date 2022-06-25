@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getTodoById, resetTodo } from "../../store/reducers/todo";
 import { changeTimestampToDate } from "../../utilities";
 import { STATUS_VARIANTS } from "../../utilities/global";
 
 export default function Modal({ todoId, isOpen, handleClose }) {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const todoItem = useSelector(({ todo }) => todo)
 
@@ -18,6 +20,10 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 			dispatch(resetTodo())
 		}
 	}, [dispatch, isOpen, todoId])
+
+	const handleEdit = () => {
+		navigate(`/todos/${todoId}`)
+	}
 
 	const renderHistory = (history) => {
 		if (history.length) {
@@ -47,7 +53,8 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 					</div>
 
 					<div className="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
-						<button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" onClick={handleClose}>Close (ESC)</button>
+						<button className="bg-cyan-500 text-white px-4 py-2 rounded-md transition" onClick={handleEdit}>Edit</button>
+						<button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" onClick={handleClose}>Close</button>
 					</div>
 				</div>
 			</div>

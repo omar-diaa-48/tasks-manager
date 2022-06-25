@@ -17,7 +17,7 @@ export default function NavBar() {
 	const renderAuthLinks = () => {
 		return user ? (
 			<>
-				<button onClick={() => navigate("/manage")} className="text-sm font-medium text-gray-200 transition-colors duration-300 transform hover:text-indigo-400">
+				<button onClick={() => navigate("/tasks")} className="text-sm font-medium text-gray-200 transition-colors duration-300 transform hover:text-indigo-400">
 					Go to tasks
 				</button>
 				<button onClick={handleSignOut} className="text-sm font-medium text-gray-200 transition-colors duration-300 transform hover:text-indigo-400">

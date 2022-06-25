@@ -22,7 +22,7 @@ export default function TodoList({ id, title, items, canAdd, handleOpenTodo }) {
 						}
 					</div>
 
-					{canAdd && <button className="mt-3" onClick={() => navigate("/submit")}>Add a card...</button>}
+					{canAdd && <button className="mt-3" onClick={() => navigate("/todos/new")}>Add a card...</button>}
 					{provided.placeholder}
 				</div>
 			)}

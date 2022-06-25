@@ -8,15 +8,15 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import SigninModal from './pages/SigninPage';
 import SignupModal from './pages/SignupPage';
-import Submit from './pages/Submit';
+import Todo from './pages/Todo';
 import Todos from './pages/Todos';
 
 const AppRoutes = () => {
 	const routes = useRoutes([
 		{ path: "*", element: < NotFound /> },
 		{ path: '/', element: <Home /> },
-		{ path: '/manage', element: <AuthRoute><Todos /></AuthRoute> },
-		{ path: '/submit', element: <AuthRoute><Submit /></AuthRoute> },
+		{ path: '/todos/:todoId', element: <AuthRoute><Todo /></AuthRoute> },
+		{ path: '/todos', element: <AuthRoute><Todos /></AuthRoute> },
 		{ path: '/sign-in', element: <SigninModal /> },
 		{ path: '/sign-up', element: <SignupModal /> },
 	])
