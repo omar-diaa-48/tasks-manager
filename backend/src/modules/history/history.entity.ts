@@ -44,6 +44,24 @@ export class History extends BaseEntity {
 	})
 	newStatusId: number;
 
+	@ManyToOne(type => User)
+	@JoinColumn({ name: 'prevAssignee', referencedColumnName: 'id' })
+	prevAssignee: User;
+
+	@Column({
+		name: "prevAssignee"
+	})
+	prevAssigneeId: number;
+
+	@ManyToOne(type => User)
+	@JoinColumn({ name: 'newAssignee', referencedColumnName: 'id' })
+	newAssignee: User;
+
+	@Column({
+		name: "newAssignee"
+	})
+	newAssigneeId: number;
+
 	@Column({
 		nullable: false,
 		default: Date.now(),

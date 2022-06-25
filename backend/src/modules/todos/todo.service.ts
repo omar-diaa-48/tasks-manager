@@ -1,5 +1,5 @@
 
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { generateID, groupByKey } from "src/utilities/helpers";
 import { JwtPayload } from "src/utilities/types/jwt-payload";
@@ -70,8 +70,12 @@ export class TodoService {
 		return record;
 	}
 
-	async updateOne(id: string, updateTodoDTO: UpdateTodoDTO, user: JwtPayload): Promise<Todo> {
+	async updateStatus(id: string, updateTodoDTO: UpdateTodoDTO, user: JwtPayload): Promise<Todo> {
 		let record = await this.repository.findOneBy({ id });
+
+		if (record.userId !== user.id) {
+			throw new UnauthorizedException('Only owner of the task can change its status')
+		}
 
 		if (!record) {
 			throw new NotFoundException(`${this.repository.metadata.tableName} table has no record with id ${id}`)

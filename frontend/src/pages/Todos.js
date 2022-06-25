@@ -6,7 +6,7 @@ import Modal from "../components/shared/Modal";
 import TodoList from "../components/TodoList";
 import TodosStatistics from "../components/TodosStatistics";
 import { getStatuses } from "../store/reducers/status";
-import { getTodos, updateTodo } from "../store/reducers/todos";
+import { getTodos, updateTodoStatus } from "../store/reducers/todos";
 import { STATUS_IDS } from "../utilities/global";
 
 export default function Todos() {
@@ -70,7 +70,7 @@ export default function Todos() {
 			return;
 		}
 
-		dispatch(updateTodo({ todoId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
+		dispatch(updateTodoStatus({ todoId: draggableId, currentStatusId: currentStatus.id, nextStatusId: transtion.to.id }))
 	}
 
 	return (

@@ -42,12 +42,12 @@ export class TodoController {
 
 	@Put(":todoId/status")
 	@UsePipes(ValidationPipe)
-	updateTodo(
+	updateTodoStatus(
 		@Param("todoId") todoId: string,
 		@Body() updateTodoDTO: UpdateTodoDTO,
 		@GetUser() user: JwtPayload
 	): Promise<Todo> {
-		return this.service.updateOne(todoId, updateTodoDTO, user);
+		return this.service.updateStatus(todoId, updateTodoDTO, user);
 	}
 
 	@Delete(":todoId")

@@ -10,5 +10,5 @@ export class UpdateTodoDTO {
 	@ApiProperty()
 	@IsOptional()
 	@IsNumber()
-	assigneeId?: number;
+	userId?: number;
 }

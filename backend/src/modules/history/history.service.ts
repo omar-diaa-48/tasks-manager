@@ -18,6 +18,7 @@ export class HistoryService {
 		record.todoId = todoId;
 		record.prevStatusId = from;
 		record.newStatusId = to;
+		record.date = Date.now();
 
 		await record.save();
 
