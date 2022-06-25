@@ -1,14 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined, IsNumber } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
 
 export class UpdateTodoDTO {
 	@ApiProperty()
-	@IsDefined()
+	@IsOptional()
 	@IsNumber()
-	statusId: number;
+	statusId?: number;
 
 	@ApiProperty()
-	@IsDefined()
+	@IsOptional()
 	@IsNumber()
-	assigneeId: number;
+	assigneeId?: number;
 }

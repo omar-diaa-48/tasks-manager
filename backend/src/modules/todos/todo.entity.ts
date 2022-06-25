@@ -29,11 +29,11 @@ export class Todo extends BaseEntity {
 	userId: number;
 
 	@ManyToOne(type => User)
-	@JoinColumn({ name: 'user', referencedColumnName: 'id' })
+	@JoinColumn({ name: 'assignee', referencedColumnName: 'id' })
 	assignee: User;
 
 	@Column({
-		name: "user"
+		name: "assignee"
 	})
 	assigneeId: number;
 
