@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import Modal from "../components/shared/Modal";
 import TodoList from "../components/TodoList";
+import TodosStatistics from "../components/TodosStatistics";
 import { getStatuses } from "../store/reducers/status";
 import { getTodos, updateTodo } from "../store/reducers/todos";
 import { STATUS_IDS } from "../utilities/global";
@@ -17,8 +18,6 @@ export default function Todos() {
 		isOpen: false,
 		todoId: ''
 	});
-
-	console.log({ modal });
 
 	const handleCloseModal = () => {
 		setModal((prevValue) => ({
@@ -76,6 +75,8 @@ export default function Todos() {
 
 	return (
 		<DragDropContext onDragEnd={handleDragEnd}>
+			<TodosStatistics />
+
 			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
 				<TodoList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTodo={handleOpenModal} />
 				<TodoList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTodo={handleOpenModal} />
