@@ -25,6 +25,6 @@ export class HistoryService {
 	}
 
 	async getTodoHistory(todoId: string): Promise<History[]> {
-		return this.repository.find({ where: { todoId } })
+		return this.repository.find({ where: { todoId }, order: { date: "ASC" }, relations: ["user", "prevStatus", "newStatus"] })
 	}
 }

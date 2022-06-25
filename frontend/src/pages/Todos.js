@@ -18,6 +18,8 @@ export default function Todos() {
 		todoId: ''
 	});
 
+	console.log({ modal });
+
 	const handleCloseModal = () => {
 		setModal((prevValue) => ({
 			...prevValue,

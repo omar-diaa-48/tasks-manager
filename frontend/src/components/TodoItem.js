@@ -1,4 +1,5 @@
 import { Draggable } from 'react-beautiful-dnd';
+import { changeTimestampToDate } from '../utilities';
 
 export default function TodoItem({ id, index, title, owner, description, time, handleOpenTodo }) {
 	return (
@@ -10,7 +11,7 @@ export default function TodoItem({ id, index, title, owner, description, time, h
 					{...provided.dragHandleProps}
 				>
 					<p className='mb-4 bg-slate-200'>{owner} @ {title}</p>
-					<p className='mb-2'>{time}</p>
+					<p className='mb-2'>{changeTimestampToDate(time)}</p>
 					<p>{description}</p>
 				</div>
 			)}
