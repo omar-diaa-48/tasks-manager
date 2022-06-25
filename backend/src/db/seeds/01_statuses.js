@@ -13,7 +13,8 @@ exports.seed = async function (knex) {
 				{ id: 3, title: "Blocked" },
 				{ id: 4, title: "In QA" },
 				{ id: 5, title: "Done" },
-				{ id: 6, title: "Deployed" }
+				{ id: 6, title: "Deployed" },
+				{ id: 100, title: "Created" }
 			]);
 		});
 };

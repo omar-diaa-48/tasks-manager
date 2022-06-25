@@ -67,6 +67,8 @@ export class TodoService {
 
 		await record.save();
 
+		await this.historyService.addTodoHistory(user.id, record.id, 100, record.statusId)
+
 		return record;
 	}
 

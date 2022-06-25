@@ -19,28 +19,12 @@ export default function Modal({ todoId, isOpen, handleClose }) {
 		}
 	}, [dispatch, isOpen, todoId])
 
-	const renderHistoryReason = (history) => {
-		if (history.prevStatusId !== history.newStatusId) {
-			return (
-				<p>{history.user.username} change the task from {history.prevStatus.title} to {history.newStatus.title}</p>
-			)
-		}
-
-		if (history.prevAssigneeId !== history.newAssigneeId) {
-			return (
-				<p>{history.user.username} change the task from {history.prevAssignee.username} to {history.newAssignee.username}</p>
-			)
-		}
-
-		return null;
-	}
-
 	const renderHistory = (history) => {
 		if (history.length) {
 			return history.map(history => (
 				<div key={history.id} className="my-4">
 					<p>{changeTimestampToDate(history.date)}</p>
-					{renderHistoryReason(history)}
+					<p>{history.user.username} change the task from {history.prevStatus.title} to {history.newStatus.title}</p>
 				</div>
 			))
 		}
