@@ -5,14 +5,16 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import * as request from "supertest";
 import { Repository } from 'typeorm';
 import { AppModule } from '../../app.module';
+import { generateID } from '../../utilities/helpers';
 import { Status } from '../status/status.entity';
 import { User } from '../users/user.entity';
-import { TaskService } from './task.service';
+import { Task } from './task.entity';
 
 describe('TaskController', () => {
 	let app: INestApplication;
 	let user: User;
 	let status: Status;
+	let task: Task;
 	let payload = {};
 	let accessToken: string;
 
@@ -39,6 +41,7 @@ describe('TaskController', () => {
 
 		user = await app.get<Repository<User>>(getRepositoryToken(User)).create({ username: "omar", password: "asdf1234" }).save();
 		status = await app.get<Repository<Status>>(getRepositoryToken(Status)).create({ title: "To Do" }).save();
+		task = await app.get<Repository<Task>>(getRepositoryToken(Task)).create({ id: generateID("T"), title: "Dummy", description: "Dummy", statusId: status.id, userId: user.id }).save();
 
 		payload = {
 			id: user.id,
@@ -48,40 +51,36 @@ describe('TaskController', () => {
 		accessToken = app.get<JwtService>(JwtService).sign(payload);
 	});
 
-	it('GET /tasks', () => {
+	it('GET /tasks should return all tasks', () => {
 		return request(app.getHttpServer())
 			.get("/tasks")
 			.set('Authorization', `Bearer ${accessToken}`)
 			.expect(200)
 	})
 
-	it('GET /tasks/:taskId', () => {
+	it('GET /tasks/:taskId should return not found task id', () => {
 		return request(app.getHttpServer())
 			.get("/tasks/12345")
 			.set('Authorization', `Bearer ${accessToken}`)
 			.expect(404)
 	})
 
-	it('GET /tasks/:taskId', async () => {
-		const task = await app.get<TaskService>(TaskService).addOne(
-			{ title: "Dummy", description: "Dummy", statusId: status.id, userId: user.id },
-			{ id: user.id, username: user.username, accessToken: "" }
-		)
-
+	it('GET /tasks/:taskId should return specific task', async () => {
 		return request(app.getHttpServer())
 			.get(`/tasks/${task.id}`)
 			.set('Authorization', `Bearer ${accessToken}`)
 			.expect(200)
+			.then(response => expect(response.body.task.id).toEqual(task.id))
 	})
 
-	it('POST /tasks', async () => {
+	it('POST /tasks should return unauthorized without token', async () => {
 		return request(app.getHttpServer())
 			.post('/tasks')
 			.send({})
 			.expect(401)
 	})
 
-	it('POST /tasks', async () => {
+	it('POST /tasks should add a task and return it', async () => {
 		return request(app.getHttpServer())
 			.post('/tasks')
 			.set('Authorization', `Bearer ${accessToken}`)
@@ -92,6 +91,9 @@ describe('TaskController', () => {
 				userId: user.id
 			})
 			.expect(201)
+			.then(response => {
+				expect(response.body.id).toBeDefined()
+			})
 	})
 
 	afterAll(async () => {
