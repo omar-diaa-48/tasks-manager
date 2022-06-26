@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from "supertest";
 import { AppModule } from '../../app.module';
 
@@ -11,15 +10,7 @@ describe('StatusController', () => {
 
 		const moduleRef = await Test
 			.createTestingModule({
-				imports: [
-					AppModule,
-					TypeOrmModule.forRoot({
-						type: 'sqlite',
-						database: ':memory:',
-						entities: [process.cwd() + '/**/*.entity{.ts,.js}'],
-						synchronize: true,
-					}),
-				]
+				imports: [AppModule]
 			})
 			.compile();
 

@@ -31,6 +31,7 @@ export class UserController {
 	}
 
 	@Post("signin")
+	@HttpCode(200)
 	@UsePipes(ValidationPipe)
 	signin(
 		@Body() signinDTO: CredentialsDTO

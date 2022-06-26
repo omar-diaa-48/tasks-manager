@@ -1,11 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import * as bcrypt from "bcrypt";
 import * as request from "supertest";
 import { Repository } from 'typeorm';
 import { AppModule } from '../../app.module';
+import { History } from '../history/history.entity';
+import { Task } from '../tasks/task.entity';
 import { User } from './user.entity';
 
 
@@ -18,15 +20,7 @@ describe('UserController', () => {
 
 		const moduleRef = await Test
 			.createTestingModule({
-				imports: [
-					AppModule,
-					TypeOrmModule.forRoot({
-						type: 'sqlite',
-						database: ':memory:',
-						entities: [process.cwd() + '/**/*.entity{.ts,.js}'],
-						synchronize: true,
-					})
-				]
+				imports: [AppModule]
 			})
 			.compile();
 
@@ -34,7 +28,7 @@ describe('UserController', () => {
 		await app.init();
 
 		user = await app.get<Repository<User>>(getRepositoryToken(User)).create({ username: "omar", password: bcrypt.hashSync("asdf1234", 10) }).save();
-
+		
 		const payload = {
 			id: user.id,
 			username: user.username
@@ -73,7 +67,50 @@ describe('UserController', () => {
 			})
 	})
 
+	it('POST /users/signin should return unauthorized with not correct credentials', () => {
+		return request(app.getHttpServer())
+			.post("/users/signin")
+			.send({
+				username: "omar",
+				password: "1234"
+			})
+			.expect(401)
+	})
+
+	it('POST /users/signup should return created user on correct credentials', () => {
+		return request(app.getHttpServer())
+			.post("/users/signup")
+			.send({
+				username: "omar50",
+				password: "asdf1234"
+			})
+			.expect(201)
+	})
+
+	it('POST /users/signup should return created user on taken username', () => {
+		return request(app.getHttpServer())
+			.post("/users/signup")
+			.send({
+				username: "omar50",
+				password: "asdf1234"
+			})
+			.expect(400)
+	})
+
+	it('POST /users/signup should return bad requests with not correct credentials', () => {
+		return request(app.getHttpServer())
+			.post("/users/signup")
+			.send({
+				username: "omar"
+			})
+			.expect(400)
+	})
+
 	afterAll(async () => {
+	await History.delete({})
+	await Task.delete({})
+	await User.delete({})
+		
 		await app.close();
 	});
 });

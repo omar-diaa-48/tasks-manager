@@ -14,6 +14,18 @@ import modules from './modules';
 		// configure database configuration
 		TypeOrmModule.forRootAsync({
 			useFactory: async (configService: ConfigService) => {
+				console.log(process.env.NODE_ENV);
+
+
+				if (process.env.NODE_ENV === "testing") {
+					return {
+						type: 'sqlite',
+						database: ':memory:',
+						entities: [process.cwd() + '/**/*.entity{.ts,.js}'],
+						synchronize: true,
+					}
+				}
+
 				return {
 					type: 'mysql',
 					host: configService.get<string>("DB_HOST"),

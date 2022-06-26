@@ -7,6 +7,7 @@ export class User extends BaseEntity {
 	id: number;
 
 	@Column({
+		unique: true,
 		nullable: false,
 		length: 100
 	})

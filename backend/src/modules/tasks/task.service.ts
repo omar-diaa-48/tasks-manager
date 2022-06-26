@@ -53,7 +53,11 @@ export class TaskService {
 		}
 	}
 
-	async addOne(addTaskDTO: AddTaskDTO, user: JwtPayload, id: string = generateID("T")): Promise<Task> {
+	async addOne(addTaskDTO: AddTaskDTO, user: JwtPayload, id?: string): Promise<Task> {
+		if (!id) {
+			id = generateID("T")
+		}
+
 		let record = this.repository.create({ id })
 
 		for (const key in addTaskDTO) {
