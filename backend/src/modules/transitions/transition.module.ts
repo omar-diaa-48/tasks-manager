@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { TransitionController } from "./transition.controller";
 import { Transition } from "./transition.entity";
 import { TransitionService } from "./transition.service";
 
@@ -8,9 +7,7 @@ import { TransitionService } from "./transition.service";
 	imports: [
 		TypeOrmModule.forFeature([Transition])
 	],
-	controllers: [TransitionController],
-	providers: [
-		TransitionService
-	]
+	controllers: [],
+	providers: [TransitionService]
 })
 export class TransitionModule { };

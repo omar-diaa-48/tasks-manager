@@ -14,23 +14,14 @@ export default function Tasks() {
 	const statuses = useSelector(({ status }) => status.data)
 	const items = useSelector(({ tasks }) => tasks)
 
-	const [modal, setModal] = useState({
-		isOpen: false,
-		taskId: ''
-	});
+	const [selectedTaskId, setSelectedTaskId] = useState('');
 
 	const handleCloseModal = () => {
-		setModal((prevValue) => ({
-			...prevValue,
-			isOpen: false
-		}))
+		setSelectedTaskId(false)
 	}
 
 	const handleOpenModal = (taskId) => {
-		setModal({
-			isOpen: true,
-			taskId
-		})
+		setSelectedTaskId(taskId)
 	}
 
 	useEffect(() => {
@@ -85,7 +76,7 @@ export default function Tasks() {
 				<TaskList title="Done" id={STATUS_IDS.DONE} items={items[STATUS_IDS.DONE]} handleOpenTask={handleOpenModal} />
 				<TaskList title="Deployed" id={STATUS_IDS.DEPLOYED} items={items[STATUS_IDS.DEPLOYED]} handleOpenTask={handleOpenModal} />
 			</div>
-			<Modal isOpen={modal.isOpen} taskId={modal.taskId} handleClose={handleCloseModal} />
+			{selectedTaskId && <Modal taskId={selectedTaskId} handleClose={handleCloseModal} />}
 		</DragDropContext>
 	)
 }

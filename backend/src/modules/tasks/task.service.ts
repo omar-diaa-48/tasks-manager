@@ -64,8 +64,6 @@ export class TaskService {
 			}
 		}
 
-		record.userId = addTaskDTO.assigneeId;
-
 		await record.save();
 
 		await this.historyService.addTaskHistory(user.id, record.id, 100, record.statusId)

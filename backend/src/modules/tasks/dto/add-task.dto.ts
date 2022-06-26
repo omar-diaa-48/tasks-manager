@@ -25,5 +25,5 @@ export class AddTaskDTO {
 	@IsDefined()
 	@Transform(({ value }) => parseInt(value))
 	@IsNumber()
-	assigneeId: number;
+	userId: number;
 }
