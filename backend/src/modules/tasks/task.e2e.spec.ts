@@ -15,7 +15,6 @@ describe('TaskController', () => {
 	let user: User;
 	let status: Status;
 	let task: Task;
-	let payload = {};
 	let accessToken: string;
 
 	beforeAll(async () => {
@@ -43,7 +42,7 @@ describe('TaskController', () => {
 		status = await app.get<Repository<Status>>(getRepositoryToken(Status)).create({ title: "To Do" }).save();
 		task = await app.get<Repository<Task>>(getRepositoryToken(Task)).create({ id: generateID("T"), title: "Dummy", description: "Dummy", statusId: status.id, userId: user.id }).save();
 
-		payload = {
+		const payload = {
 			id: user.id,
 			username: user.username
 		}
@@ -56,6 +55,9 @@ describe('TaskController', () => {
 			.get("/tasks")
 			.set('Authorization', `Bearer ${accessToken}`)
 			.expect(200)
+			.then(response => {
+				expect(response.body).toBeDefined()
+			})
 	})
 
 	it('GET /tasks/:taskId should return not found task id', () => {

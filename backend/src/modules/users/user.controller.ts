@@ -16,7 +16,9 @@ export class UserController {
 	) { }
 
 	@Get()
-	getAllUsers(): Promise<User[]> {
+	getAllUsers(
+		@GetUser() user: JwtPayload
+	): Promise<User[]> {
 		return this.service.getAll();
 	}
 
