@@ -20,14 +20,16 @@ export class TaskController {
 
 	@Get()
 	getAllTasks(
-		@Query("statusId") statusId?: number
+		@Query("statusId") statusId: number,
+		@GetUser() user: JwtPayload
 	): Promise<Task[]> {
 		return this.service.getAll(statusId);
 	}
 
 	@Get(':taskId')
 	getTaskById(
-		@Param("taskId") taskId: string
+		@Param("taskId") taskId: string,
+		@GetUser() user: JwtPayload
 	): Promise<{ task: Task, history: History[] }> {
 		return this.service.getById(taskId);
 	}
@@ -64,7 +66,8 @@ export class TaskController {
 	@Delete(":taskId")
 	@UsePipes(ValidationPipe)
 	deleteTask(
-		@Param("taskId") taskId: number
+		@Param("taskId") taskId: number,
+		@GetUser() user: JwtPayload
 	): Promise<{ id: number }> {
 		return this.service.deleteOne(taskId);
 	}

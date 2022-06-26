@@ -13,7 +13,7 @@ export class AddTaskDTO {
 	@IsDefined()
 	@IsString()
 	@MaxLength(255)
-	description: number;
+	description: string;
 
 	@ApiProperty()
 	@IsDefined()

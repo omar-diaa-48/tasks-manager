@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from "supertest";
-import { StatusModule } from './status.module';
+import { AppModule } from '../../app.module';
 
 describe('StatusController', () => {
 	let app: INestApplication;
@@ -12,7 +12,7 @@ describe('StatusController', () => {
 		const moduleRef = await Test
 			.createTestingModule({
 				imports: [
-					StatusModule,
+					AppModule,
 					TypeOrmModule.forRoot({
 						type: 'sqlite',
 						database: ':memory:',
@@ -25,7 +25,7 @@ describe('StatusController', () => {
 
 		app = moduleRef.createNestApplication();
 		await app.init();
-		
+
 	});
 
 	it('GET /statuses', () => {

@@ -1,9 +1,15 @@
 import { INestApplication } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppModule } from 'src/app.module';
 import * as request from "supertest";
-import { UserModule } from '../users/user.module';
+
+const userService = {
+	getAll: () => { },
+	signup: () => { },
+	signin: () => { },
+	jwtSignIn: () => { }
+}
 
 describe('UserController', () => {
 	let app: INestApplication;
@@ -13,7 +19,7 @@ describe('UserController', () => {
 		const moduleRef = await Test
 			.createTestingModule({
 				imports: [
-					UserModule,
+					AppModule,
 					TypeOrmModule.forRoot({
 						type: 'sqlite',
 						database: ':memory:',
@@ -22,13 +28,6 @@ describe('UserController', () => {
 					})
 				]
 			})
-			.overrideProvider(JwtModule)
-			.useValue(JwtModule.register({
-				secret: "abc123321cba",
-				signOptions: {
-					expiresIn: 3600 * 60
-				}
-			}))
 			.compile();
 
 		app = moduleRef.createNestApplication();
