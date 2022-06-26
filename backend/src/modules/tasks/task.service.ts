@@ -1,8 +1,8 @@
 
 import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { generateID, groupByKey } from "src/utilities/helpers";
-import { JwtPayload } from "src/utilities/types/jwt-payload";
+import { generateID, groupByKey } from "../../utilities/helpers";
+import { JwtPayload } from "../../utilities/types/jwt-payload";
 import { BaseRepository } from "../base/base-repository";
 import { History } from "../history/history.entity";
 import { HistoryService } from "../history/history.service";

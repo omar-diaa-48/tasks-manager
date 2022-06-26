@@ -1,8 +1,8 @@
 
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { GetUser } from "src/utilities/decorators/get-user.decorator";
-import { JwtPayload } from "src/utilities/types/jwt-payload";
+import { GetUser } from "../../utilities/decorators/get-user.decorator";
+import { JwtPayload } from "../../utilities/types/jwt-payload";
 import { History } from "../history/history.entity";
 import { AddTaskDTO } from "./dto/add-task.dto";
 import { UpdateTaskStatusDTO } from "./dto/update-task-status.dto";

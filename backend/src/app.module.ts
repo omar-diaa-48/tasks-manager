@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { IsAuthenticatedMiddleware } from './middlewares/is-authenticated.middleware';
 import modules from './modules';
-import { DatabaseModule } from './modules/database/database.module';
 
 @Module({
 	imports: [
@@ -29,8 +28,6 @@ import { DatabaseModule } from './modules/database/database.module';
 
 			inject: [ConfigService]
 		}),
-
-		DatabaseModule,
 
 		...modules
 	],
