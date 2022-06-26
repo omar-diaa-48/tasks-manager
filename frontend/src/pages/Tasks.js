@@ -68,7 +68,7 @@ export default function Tasks() {
 		<DragDropContext onDragEnd={handleDragEnd}>
 			<TasksStatistics />
 
-			<div className="mx-48 mt-12 flex flex-row justify-between gap-4">
+			<div className="mx-12 md:mx-24 lg:mx:48 mt-12 flex flex-col lg:flex-row lg:justify-between gap-4">
 				<TaskList title="To Do" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.TO_DO]} canAdd={true} handleOpenTask={handleOpenModal} />
 				<TaskList title="In Progress" id={STATUS_IDS.TO_DO} items={items[STATUS_IDS.IN_PROGRESS]} handleOpenTask={handleOpenModal} />
 				<TaskList title="Blocked" id={STATUS_IDS.BLOCKED} items={items[STATUS_IDS.BLOCKED]} handleOpenTask={handleOpenModal} />
