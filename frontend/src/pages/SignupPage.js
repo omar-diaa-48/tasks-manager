@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import { signup } from "../store/reducers/user";
 
-// const schema = yup.object().shape({
-// 	username: yup.string().email('Please enter a valid email').required('You must enter a email'),
-// 	password: yup.string().required('Please enter a valid password').min(4, 'Password is too short - should be 4 chars minimum.')
-// });
+const schema = yup.object().shape({
+	username: yup.string().required('You must enter a username'),
+	password: yup.string().required('Please enter a valid password').min(8, 'Password is too short - should be 8 chars minimum.')
+});
 
 export default function SignupModal() {
 	const navigate = useNavigate();
@@ -17,6 +18,8 @@ export default function SignupModal() {
 		password: ""
 	})
 
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const handleChange = (e) => {
 		setFormValues((prevValues) => ({
 			...prevValues,
@@ -26,17 +29,29 @@ export default function SignupModal() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(signup(formValues))
-			.then(({ payload }) => {
-				if (payload) {
-					navigate("/")
-				}
+		schema.validate(formValues)
+			.then(() => {
+				dispatch(signup(formValues))
+					.then(({ payload }) => {
+						if (payload) {
+							navigate("/")
+						}
+					})
+			})
+			.catch((error) => {
+				setErrorMessage(error.message)
 			})
 	}
 
 	return (
 		<div className="flex justify-center items-center">
 			<form onSubmit={handleSubmit} className="max-w-md mt-24">
+				{errorMessage && (
+					<div className="py-3 px-5 mb-4 bg-red-100 text-red-900 text-sm rounded-md border border-red-200" role="alert">
+						{errorMessage}
+					</div>
+				)}
+
 				<div className="mb-4">
 					<label className="block text-md font-light mb-2" htmlFor="username">Username</label>
 					<input className="w-full bg-drabya-gray border-gray-500 appearance-none border p-4 font-light leading-tight focus:outline-none focus:shadow-outline" type="text" name="username"
