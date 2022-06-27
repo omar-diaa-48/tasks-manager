@@ -13,6 +13,7 @@
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
 		"start:prod": "node dist/main",
+		"start:container": "npm run build && node dist/main",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
 		"test": "export NODE_ENV=testing && jest",
 		"test:watch": "export NODE_ENV=testing && jest --watch",
